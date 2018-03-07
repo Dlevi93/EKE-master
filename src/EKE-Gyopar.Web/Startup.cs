@@ -58,7 +58,6 @@ namespace EKE_Gyopar.Web
             //Add Framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
             services.AddTransient<IUnitOfWork, UnitOfWork>();
-            services.AddTransient<UserSeed>();
             services.AddTransient<IArticleService, ArticleService>();
             services.AddTransient<IMagazineService, MagazineService>();
             services.AddTransient<IMagazineCategoryService, MagazineCategoryService>();

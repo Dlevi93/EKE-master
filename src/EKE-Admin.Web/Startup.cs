@@ -57,16 +57,16 @@ namespace EKE_Admin.Web
         private static void RegisterServices(IServiceCollection services)
         {
             //Add Identity
-            services.AddIdentity<ApplicationUser, ApplicationRole>()
+            services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<BaseDbContext>()
                 .AddDefaultTokenProviders();
+            
             //Add Framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
 
-            services.AddTransient<UserSeed>();
             services.AddTransient<IMagazineService, MagazineService>();
             services.AddTransient<IArticleService, ArticleService>();
             services.AddTransient<IMagazineCategoryService, MagazineCategoryService>();
@@ -124,7 +124,7 @@ namespace EKE_Admin.Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, UserSeed seeder)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
@@ -149,8 +149,6 @@ namespace EKE_Admin.Web
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-
-            seeder.SeedAdminUser();
         }
     }
 }

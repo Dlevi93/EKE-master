@@ -3113,7 +3113,6 @@
     <None Include="wwwroot\lib\jquery\dist\jquery.js" />
     <None Include="wwwroot\lib\jquery\dist\jquery.min.js" />
     <None Include="wwwroot\lib\jquery\dist\jquery.min.map" />
-    <None Include="wwwroot\_references.js" />
   </ItemGroup>
 
   <ItemGroup>

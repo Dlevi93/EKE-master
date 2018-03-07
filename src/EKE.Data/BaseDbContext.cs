@@ -3,10 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using EKE.Data.Entities;
 using EKE.Data.Entities.Gyopar;
 using EKE.Data.Entities.Museum;
+using System;
 
 namespace EKE.Data
 {
-    public class BaseDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
+    public class BaseDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>
     {
         public BaseDbContext(DbContextOptions<BaseDbContext> options) : base(options) { }
 
