@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using EKE.Data.Entities.Base;
+﻿using EKE.Data.Entities.Base;
+using System.Collections.Generic;
 
 namespace EKE.Data.Entities.Vandortabor
 {
@@ -7,7 +7,8 @@ namespace EKE.Data.Entities.Vandortabor
     {
         public int Id { get; set; }
         public int Year { get; set; }
-        public Dictionary<string,bool> Days { get; set; }
         public bool IsActive { get; set; }
+
+        public virtual List<VtTrip> Trips { get; set; }
     }
 }

@@ -4,6 +4,7 @@ using EKE.Data.Entities;
 using EKE.Data.Entities.Gyopar;
 using EKE.Data.Entities.Museum;
 using System;
+using EKE.Data.Entities.Vandortabor;
 
 namespace EKE.Data
 {
@@ -24,6 +25,16 @@ namespace EKE.Data
         DbSet<Element> M_Element { get; set; }
         DbSet<ElementCategory> M_ElementCategory { get; set; }
         DbSet<ElementTag> M_ElementTag { get; set; }
+
+        DbSet<VtTrip> Vt_Trip { get; set; }
+        DbSet<VtUser> Vt_User { get; set; }
+        DbSet<VtYear> Vt_Year { get; set; }
+        DbSet<VtTripAttribute> Vt_TripAttribute { get; set; }
+        DbSet<VtSpot> Vt_Spot { get; set; }
+        DbSet<VtAccomodationType> Vt_AccomodationType { get; set; }
+        DbSet<VtMembership> Vt_Membership { get; set; }
+        DbSet<VtTripCategory> Vt_TripCategory { get; set; }
+        DbSet<VtTripDifficulty> Vt_TripDifficulty { get; set; }
         #endregion
 
         //Model configurations

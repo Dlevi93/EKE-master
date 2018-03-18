@@ -5,14 +5,14 @@
         Default = 0,
     }
 
-    public enum VtTripDifficulty
+    public enum VtTripDifficulties
     {
         Easy = 0,
         Medium = 1,
         Hard = 2
     }
 
-    public enum VtTripCategory
+    public enum VtTripCategories
     {
         Gyerek = 0,
         Termeszet = 1,
@@ -61,7 +61,7 @@
         Eke_Udvarhely = 21
     }
 
-    public enum VtAccomodationType
+    public enum VtAccomodationTypes
     {
         Tent = 0,
         Pension = 1,

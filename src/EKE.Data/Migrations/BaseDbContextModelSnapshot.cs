@@ -18,12 +18,12 @@ namespace EKE.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.0.1-rtm-125")
+                .HasAnnotation("ProductVersion", "2.0.2-rtm-10011")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("EKE.Data.Entities.ApplicationRole", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("ConcurrencyStamp")
@@ -47,7 +47,7 @@ namespace EKE.Data.Migrations
 
             modelBuilder.Entity("EKE.Data.Entities.ApplicationUser", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("AccessFailedCount");
@@ -249,6 +249,8 @@ namespace EKE.Data.Migrations
 
                     b.Property<int>("Type");
 
+                    b.Property<int?>("VtTripId");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ArticleId");
@@ -258,6 +260,8 @@ namespace EKE.Data.Migrations
                     b.HasIndex("ElementId");
 
                     b.HasIndex("MagazineId");
+
+                    b.HasIndex("VtTripId");
 
                     b.ToTable("MediaElements");
                 });
@@ -384,7 +388,187 @@ namespace EKE.Data.Migrations
                     b.ToTable("M_ElementTag");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+            modelBuilder.Entity("EKE.Data.Entities.Vandortabor.VtAccomodationType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AccomodationType");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Vt_AccomodationType");
+                });
+
+            modelBuilder.Entity("EKE.Data.Entities.Vandortabor.VtMembership", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("Membership");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Vt_Membership");
+                });
+
+            modelBuilder.Entity("EKE.Data.Entities.Vandortabor.VtSpot", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("Day");
+
+                    b.Property<int>("Spots");
+
+                    b.Property<int?>("VtTripId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("VtTripId");
+
+                    b.ToTable("Vt_Spot");
+                });
+
+            modelBuilder.Entity("EKE.Data.Entities.Vandortabor.VtTrip", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("CategoryId");
+
+                    b.Property<string>("Description");
+
+                    b.Property<int?>("DifficultyId");
+
+                    b.Property<int>("Length");
+
+                    b.Property<string>("Name");
+
+                    b.Property<decimal>("Price");
+
+                    b.Property<int?>("VtUserId");
+
+                    b.Property<int?>("VtYearId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("DifficultyId");
+
+                    b.HasIndex("VtUserId");
+
+                    b.HasIndex("VtYearId");
+
+                    b.ToTable("Vt_Trip");
+                });
+
+            modelBuilder.Entity("EKE.Data.Entities.Vandortabor.VtTripAttribute", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("Attribute");
+
+                    b.Property<string>("Name");
+
+                    b.Property<int?>("VtTripId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("VtTripId");
+
+                    b.ToTable("Vt_TripAttribute");
+                });
+
+            modelBuilder.Entity("EKE.Data.Entities.Vandortabor.VtTripCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.Property<int>("TripCategory");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Vt_TripCategory");
+                });
+
+            modelBuilder.Entity("EKE.Data.Entities.Vandortabor.VtTripDifficulty", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.Property<int>("TripDifficulty");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Vt_TripDifficulty");
+                });
+
+            modelBuilder.Entity("EKE.Data.Entities.Vandortabor.VtUser", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("AccomodationTypeId");
+
+                    b.Property<DateTime>("Birthdate");
+
+                    b.Property<string>("Car");
+
+                    b.Property<string>("City");
+
+                    b.Property<string>("Cnp");
+
+                    b.Property<string>("Country");
+
+                    b.Property<string>("Email");
+
+                    b.Property<int?>("MembershipId");
+
+                    b.Property<int>("MembershipNo");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("Note");
+
+                    b.Property<int>("PhoneNumber");
+
+                    b.Property<DateTime>("RegistrationDate");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccomodationTypeId");
+
+                    b.HasIndex("MembershipId");
+
+                    b.ToTable("Vt_User");
+                });
+
+            modelBuilder.Entity("EKE.Data.Entities.Vandortabor.VtYear", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("IsActive");
+
+                    b.Property<int>("Year");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Vt_Year");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -393,8 +577,7 @@ namespace EKE.Data.Migrations
 
                     b.Property<string>("ClaimValue");
 
-                    b.Property<string>("RoleId")
-                        .IsRequired();
+                    b.Property<Guid>("RoleId");
 
                     b.HasKey("Id");
 
@@ -403,7 +586,7 @@ namespace EKE.Data.Migrations
                     b.ToTable("AspNetRoleClaims");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -412,8 +595,7 @@ namespace EKE.Data.Migrations
 
                     b.Property<string>("ClaimValue");
 
-                    b.Property<string>("UserId")
-                        .IsRequired();
+                    b.Property<Guid>("UserId");
 
                     b.HasKey("Id");
 
@@ -422,7 +604,7 @@ namespace EKE.Data.Migrations
                     b.ToTable("AspNetUserClaims");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
                     b.Property<string>("LoginProvider");
 
@@ -430,8 +612,7 @@ namespace EKE.Data.Migrations
 
                     b.Property<string>("ProviderDisplayName");
 
-                    b.Property<string>("UserId")
-                        .IsRequired();
+                    b.Property<Guid>("UserId");
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
@@ -440,11 +621,11 @@ namespace EKE.Data.Migrations
                     b.ToTable("AspNetUserLogins");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
                 {
-                    b.Property<string>("UserId");
+                    b.Property<Guid>("UserId");
 
-                    b.Property<string>("RoleId");
+                    b.Property<Guid>("RoleId");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -453,9 +634,9 @@ namespace EKE.Data.Migrations
                     b.ToTable("AspNetUserRoles");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
-                    b.Property<string>("UserId");
+                    b.Property<Guid>("UserId");
 
                     b.Property<string>("LoginProvider");
 
@@ -533,6 +714,10 @@ namespace EKE.Data.Migrations
                     b.HasOne("EKE.Data.Entities.Gyopar.Magazine")
                         .WithMany("MediaElements")
                         .HasForeignKey("MagazineId");
+
+                    b.HasOne("EKE.Data.Entities.Vandortabor.VtTrip")
+                        .WithMany("MediaElements")
+                        .HasForeignKey("VtTripId");
                 });
 
             modelBuilder.Entity("EKE.Data.Entities.Gyopar.Synonym", b =>
@@ -563,7 +748,51 @@ namespace EKE.Data.Migrations
                         .HasForeignKey("ElementId");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+            modelBuilder.Entity("EKE.Data.Entities.Vandortabor.VtSpot", b =>
+                {
+                    b.HasOne("EKE.Data.Entities.Vandortabor.VtTrip")
+                        .WithMany("Spots")
+                        .HasForeignKey("VtTripId");
+                });
+
+            modelBuilder.Entity("EKE.Data.Entities.Vandortabor.VtTrip", b =>
+                {
+                    b.HasOne("EKE.Data.Entities.Vandortabor.VtTripCategory", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId");
+
+                    b.HasOne("EKE.Data.Entities.Vandortabor.VtTripDifficulty", "Difficulty")
+                        .WithMany()
+                        .HasForeignKey("DifficultyId");
+
+                    b.HasOne("EKE.Data.Entities.Vandortabor.VtUser")
+                        .WithMany("Trips")
+                        .HasForeignKey("VtUserId");
+
+                    b.HasOne("EKE.Data.Entities.Vandortabor.VtYear")
+                        .WithMany("Trips")
+                        .HasForeignKey("VtYearId");
+                });
+
+            modelBuilder.Entity("EKE.Data.Entities.Vandortabor.VtTripAttribute", b =>
+                {
+                    b.HasOne("EKE.Data.Entities.Vandortabor.VtTrip")
+                        .WithMany("Attributes")
+                        .HasForeignKey("VtTripId");
+                });
+
+            modelBuilder.Entity("EKE.Data.Entities.Vandortabor.VtUser", b =>
+                {
+                    b.HasOne("EKE.Data.Entities.Vandortabor.VtAccomodationType", "AccomodationType")
+                        .WithMany()
+                        .HasForeignKey("AccomodationTypeId");
+
+                    b.HasOne("EKE.Data.Entities.Vandortabor.VtMembership", "Membership")
+                        .WithMany()
+                        .HasForeignKey("MembershipId");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.HasOne("EKE.Data.Entities.ApplicationRole")
                         .WithMany()
@@ -571,7 +800,7 @@ namespace EKE.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
                     b.HasOne("EKE.Data.Entities.ApplicationUser")
                         .WithMany()
@@ -579,7 +808,7 @@ namespace EKE.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
                     b.HasOne("EKE.Data.Entities.ApplicationUser")
                         .WithMany()
@@ -587,7 +816,7 @@ namespace EKE.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
                 {
                     b.HasOne("EKE.Data.Entities.ApplicationRole")
                         .WithMany()
@@ -600,7 +829,7 @@ namespace EKE.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
                     b.HasOne("EKE.Data.Entities.ApplicationUser")
                         .WithMany()
