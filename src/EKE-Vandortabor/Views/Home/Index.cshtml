@@ -2,7 +2,15 @@
     ViewData["Title"] = "Home Page";
 }
 
-<app asp-prerender-module="ClientApp/dist/main-server">Loading...</app>
+<app asp-prerender-module="ClientApp/dist/main-server">
+    <div class="splash">
+        <div class="color-line"></div>
+        <div class="splash-title">
+            <h1>Angular Multi-Step Wizard</h1>
+            <img src="~/images/loading-bars.svg" width="64" height="64" />
+        </div>
+    </div>
+</app>
 
 <script src="~/dist/vendor.js" asp-append-version="true"></script>
 @section scripts {
