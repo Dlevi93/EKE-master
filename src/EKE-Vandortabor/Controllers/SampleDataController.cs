@@ -14,14 +14,26 @@ namespace EKE_Vandortabor.Controllers
         };
 
         [HttpGet("[action]")]
-        public IEnumerable<WeatherForecast> WeatherForecasts()
+        public IEnumerable<Membership> Memberships()
         {
             var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            return Enumerable.Range(1, 9).Select(index => new Membership
             {
-                DateFormatted = DateTime.Now.AddDays(index).ToString("d"),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
+                Id = 1,
+                Enum = 1,
+                Name = Summaries[rng.Next(Summaries.Length)]
+            });
+        }
+
+        [HttpGet("[action]")]
+        public IEnumerable<AccomodationType> AccomodationTypes()
+        {
+            var rng = new Random();
+            return Enumerable.Range(1, 5).Select(index => new AccomodationType
+            {
+                Id = 1,
+                Enum = 1,
+                Name = Summaries[rng.Next(Summaries.Length)]
             });
         }
 
@@ -33,19 +45,18 @@ namespace EKE_Vandortabor.Controllers
         }
 
 
-        public class WeatherForecast
+        public class Membership
         {
-            public string DateFormatted { get; set; }
-            public int TemperatureC { get; set; }
-            public string Summary { get; set; }
+            public int Id { get; set; }
+            public string Name { get; set; }
+            public int Enum { get; set; }
+        }
 
-            public int TemperatureF
-            {
-                get
-                {
-                    return 32 + (int)(TemperatureC / 0.5556);
-                }
-            }
+        public class AccomodationType
+        {
+            public int Id { get; set; }
+            public string Name { get; set; }
+            public int Enum { get; set; }
         }
 
         public class AddUser

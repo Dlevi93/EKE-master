@@ -34,7 +34,7 @@ export class PersonalComponent implements OnInit {
     goToNext(form: any) {
         if (this.save(form)) {
             // Navigate to the work page
-            this.router.navigate(['/registration/work']);
+            this.router.navigate(['/registration/personaltrip']);
         }
     }
 }

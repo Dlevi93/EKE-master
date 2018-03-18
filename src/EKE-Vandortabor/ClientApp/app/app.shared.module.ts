@@ -14,7 +14,7 @@ import { RegistrationComponent } from './components/registration/registration.co
 
 import { NavbarComponent } from './components/registrationflow/navbar/navbar.component';
 import { PersonalComponent } from './components/registrationflow/personal/personal.component';
-import { WorkComponent } from './components/registrationflow/work/work.component';
+import { PersonalTripComponent } from './components/registrationflow/personaltrip/personaltrip.component';
 import { AddressComponent } from './components/registrationflow/address/address.component';
 import { ResultComponent } from './components/registrationflow/result/result.component';
 
@@ -33,7 +33,7 @@ import { WorkflowGuard } from './components/registrationflow/workflow/workflow-g
 
         NavbarComponent,
         PersonalComponent,
-        WorkComponent,
+        PersonalTripComponent,
         AddressComponent,
         ResultComponent,
 
@@ -53,7 +53,7 @@ import { WorkflowGuard } from './components/registrationflow/workflow/workflow-g
             {
                 path: 'registration', component: RegistrationComponent, children: [
                     { path: 'personal', component: PersonalComponent },
-                    { path: 'work', component: WorkComponent, canActivate: [WorkflowGuard] },
+                    { path: 'personaltrip', component: PersonalTripComponent, canActivate: [WorkflowGuard] },
                     { path: 'address', component: AddressComponent, canActivate: [WorkflowGuard] },
                     { path: 'result', component: ResultComponent, canActivate: [WorkflowGuard] },
                     { path: '', redirectTo: '/registration/personal', pathMatch: 'full' },

@@ -3,9 +3,13 @@ export class FormData {
     lastName: string = '';
     email: string = '';
     birthDate: string = '';
+    city: string = '';
+    country: string = '';
+    phoneno: string = '';
+    cnp: string = '';
+
     work: string = '';
     street: string = '';
-    city: string = '';
     state: string = '';
     zip: string = '';
 
@@ -15,9 +19,13 @@ export class FormData {
         this.lastName = '';
         this.email = '';
         this.birthDate = '';
+        this.city = '';
+        this.country = '';
+        this.phoneno = '';
+        this.cnp = '';
+
         this.work = '';
         this.street = '';
-        this.city = '';
         this.state = '';
         this.zip = '';
     }
@@ -28,11 +36,14 @@ export class Personal {
     lastName: string = '';
     email: string = '';
     birthDate: string = '';
+    city: string = '';
+    country: string = '';
+    phoneno: string = '';
+    cnp: string = '';
 }
 
 export class Address {
     street: string = '';
-    city: string = '';
     state: string = '';
     zip: string = '';
 }
