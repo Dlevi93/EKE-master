@@ -2,6 +2,7 @@
 using EKE.Data.Repository.General;
 using EKE.Data.Repository.Gyopar;
 using EKE.Data.Repository.Muzeum;
+using EKE.Data.Repository.Vt;
 
 namespace EKE.Data.Infrastructure
 {
@@ -23,6 +24,11 @@ namespace EKE.Data.Infrastructure
 
         //Global
         IMediaElementRepository MediaElementRepository { get; }
+
+        //Vt
+        IVtAccomodationTypeRepository AccomodationTypeRepository { get; }
+        IVtMembershipRepository MembershipRepository { get; }
+
         void SaveChanges();
     }
 }

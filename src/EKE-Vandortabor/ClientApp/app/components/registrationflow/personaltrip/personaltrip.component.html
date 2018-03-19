@@ -2,25 +2,19 @@
     <div class="form-horizontal">
         <div class="tab-pane fade in active">
             <h4 class="head text-center">2. l&eacute;p&eacute;s: T&aacute;borral kapcsolatos adatok kit&ouml;lt&eacute;se</h4>
-            <br/>
+            <br />
             <div class='row'>
+                <p-dropdown [options]="memberships" [(ngModel)]="selectedValueMembership" optionLabel="name" [showClear]="true"></p-dropdown>
+
                 <div class='col-xs-offset-4 col-xs-10 col-sm-offset-5 col-sm-4'>
                     <div class="row">
-                        <div class='col-xs-12 col-sm-4'>
-                            <div class="form-group">
-                                <label class="control-label" for="firstname">Vezet&eacute;kn&eacute;v</label>
-                                <select [(ngModel)]="selectedValueMembership">
-                                    <option *ngFor="let c of memberships" [ngValue]="c.id">{{c.name}}</option>
-                                </select>
-                            </div>
+                        <div class='col-xs-12 col-sm-6'>
+                            <label class="control-label" for="firstname">Vezet&eacute;kn&eacute;v</label>
+                            <p-dropdown [options]="memberships" [(ngModel)]="selectedValueMembership" optionLabel="name" [showClear]="true"></p-dropdown>
                         </div>
-                        <div class='col-xs-12 col-sm-4'>
-                            <div class="form-group">
-                                <label class="control-label" for="firstname">Vezet&eacute;kn&eacute;v</label>
-                                <select [(ngModel)]="selectedValueAccType">
-                                    <option *ngFor="let c of accomodationTypes" [ngValue]="c.id">{{c.name}}</option>
-                                </select>
-                            </div>
+                        <div class='col-xs-12 col-sm-6'>
+                            <label class="control-label" for="firstname">Vezet&eacute;kn&eacute;v</label>
+                            <p-dropdown [options]="accomodationTypes" [(ngModel)]="selectedAccomodationTypes" optionLabel="name"></p-dropdown>
                         </div>
                     </div>
                 </div>

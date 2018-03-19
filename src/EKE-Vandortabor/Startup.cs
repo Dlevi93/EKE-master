@@ -1,10 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using EKE.Data.Entities.Vandortabor;
+using EKE.Data.Infrastructure;
+using EKE.Data.Repository;
+using EKE.Data.Repository.Base;
+using EKE.Service.Services.Vt;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.Webpack;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -22,7 +24,26 @@ namespace EKE_Vandortabor
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Add framework services.
+            services.AddDbContext<EKE.Data.BaseDbContext>(options =>
+                  options.UseSqlServer(Configuration.GetConnectionString("EKEConnectionString")));
+
+            RegisterServices(services);
+        }
+
+        private void RegisterServices(IServiceCollection services)
+        {
+            //Add Framework services.
+            services.AddApplicationInsightsTelemetry(Configuration);
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
+            services.AddTransient<IVtServices, VtServices>();
+
+            services.AddTransient<IEntityBaseRepository<VtAccomodationType>, EntityBaseRepository<VtAccomodationType>>();
+            services.AddTransient<IEntityBaseRepository<VtMembership>, EntityBaseRepository<VtMembership>>();
+
+            //Add Services
             services.AddMvc();
+            services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Http } from '@angular/http';
+import { DropdownModule } from 'primeng/dropdown';
 
 import { FormDataService } from '../data/formData.service';
 
@@ -12,6 +13,8 @@ import { FormDataService } from '../data/formData.service';
 export class PersonalTripComponent implements OnInit {
     public memberships: Membership[];
     public accomodationTypes: AccomodationType[];
+    selectedValueMembership: Membership;
+    selectedAccomodationTypes: AccomodationType;
     workType: string;
     form: any;
 
@@ -41,14 +44,14 @@ export class PersonalTripComponent implements OnInit {
     goToPrevious(form: any) {
         if (this.save(form)) {
             // Navigate to the personal page
-            this.router.navigate(['/registration/personal']);
+            this.router.navigate(['registration/personal']);
         }
     }
 
     goToNext(form: any) {
         if (this.save(form)) {
             // Navigate to the address page
-            this.router.navigate(['/registration/address']);
+            this.router.navigate(['registration/address']);
         }
     }
 }

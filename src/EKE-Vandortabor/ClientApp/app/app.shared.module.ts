@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { CalendarModule } from 'primeng/calendar';
+import { DropdownModule } from 'primeng/dropdown';
 
 import { AppComponent } from './components/app/app.component';
 import { NavMenuComponent } from './components/navmenu/navmenu.component';
@@ -41,6 +42,7 @@ import { WorkflowGuard } from './components/registrationflow/workflow/workflow-g
     ],
     imports: [
         CalendarModule,
+        DropdownModule,
         CommonModule,
         HttpModule,
         FormsModule,
@@ -53,11 +55,11 @@ import { WorkflowGuard } from './components/registrationflow/workflow/workflow-g
             {
                 path: 'registration', component: RegistrationComponent, children: [
                     { path: 'personal', component: PersonalComponent },
-                    { path: 'personaltrip', component: PersonalTripComponent, canActivate: [WorkflowGuard] },
+                    { path: 'pstrip', component: PersonalTripComponent, canActivate: [WorkflowGuard] },
                     { path: 'address', component: AddressComponent, canActivate: [WorkflowGuard] },
                     { path: 'result', component: ResultComponent, canActivate: [WorkflowGuard] },
                     { path: '', redirectTo: '/registration/personal', pathMatch: 'full' },
-                    ]
+                ]
             },
 
             { path: '**', redirectTo: 'PersonalComponent' }

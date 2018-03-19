@@ -2,6 +2,7 @@
 using EKE.Data.Repository.General;
 using EKE.Data.Repository.Gyopar;
 using EKE.Data.Repository.Muzeum;
+using EKE.Data.Repository.Vt;
 
 namespace EKE.Data.Infrastructure
 {
@@ -22,6 +23,9 @@ namespace EKE.Data.Infrastructure
         private IElementCategoryRepository _elementCategoryRepository;
         private IElementTagsRepository _elementTagRepository;
 
+        private IVtAccomodationTypeRepository _accomodationTypeRepository;
+        private IVtMembershipRepository _membershipRepository;
+
         public UnitOfWork(BaseDbContext dbContext)
         {
             _dbContext = dbContext;
@@ -38,6 +42,8 @@ namespace EKE.Data.Infrastructure
         public IElementRepository ElementRepository => _elementRepository ?? (_elementRepository = new ElementRepository(_dbContext));
         public IElementCategoryRepository ElementCategoryRepository => _elementCategoryRepository ?? (_elementCategoryRepository = new ElementCategoryRepository(_dbContext));
         public IElementTagsRepository ElementTagRepository => _elementTagRepository ?? (_elementTagRepository = new ElementTagRepository(_dbContext));
+        public IVtAccomodationTypeRepository AccomodationTypeRepository => _accomodationTypeRepository ?? (_accomodationTypeRepository = new VtAccomodationTypeRepository(_dbContext));
+        public IVtMembershipRepository MembershipRepository => _membershipRepository ?? (_membershipRepository = new VtMembershipRepository(_dbContext));
 
         public void SaveChanges()
         {

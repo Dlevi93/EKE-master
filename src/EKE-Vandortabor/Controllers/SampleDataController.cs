@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using EKE.Service.Services.Vt;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EKE_Vandortabor.Controllers
@@ -8,32 +9,39 @@ namespace EKE_Vandortabor.Controllers
     [Route("api/[controller]")]
     public class SampleDataController : Controller
     {
+        private readonly IVtServices _vtServices;
+
+        public SampleDataController(IVtServices vtServices)
+        {
+            _vtServices = vtServices;
+        }
+
         private static string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
         [HttpGet("[action]")]
-        public IEnumerable<Membership> Memberships()
+        public IEnumerable<MembershipResponse> Memberships()
         {
-            var rng = new Random();
-            return Enumerable.Range(1, 9).Select(index => new Membership
+            var result = _vtServices.GetAllMemberships();
+            return result.Data.Select(x => new MembershipResponse
             {
-                Id = 1,
-                Enum = 1,
-                Name = Summaries[rng.Next(Summaries.Length)]
+                Id = x.Id,
+                Enum = (int)x.Membership,
+                Name = x.Name
             });
         }
 
         [HttpGet("[action]")]
-        public IEnumerable<AccomodationType> AccomodationTypes()
+        public IEnumerable<AccomodationTypeResponse> AccomodationTypes()
         {
-            var rng = new Random();
-            return Enumerable.Range(1, 5).Select(index => new AccomodationType
+            var result = _vtServices.GetAllAccomodationTypes();
+            return result.Data.Select(x => new AccomodationTypeResponse
             {
-                Id = 1,
-                Enum = 1,
-                Name = Summaries[rng.Next(Summaries.Length)]
+                Id = x.Id,
+                Enum = (int)x.AccomodationType,
+                Name = x.Name
             });
         }
 
@@ -45,14 +53,14 @@ namespace EKE_Vandortabor.Controllers
         }
 
 
-        public class Membership
+        public class MembershipResponse
         {
             public int Id { get; set; }
             public string Name { get; set; }
             public int Enum { get; set; }
         }
 
-        public class AccomodationType
+        public class AccomodationTypeResponse
         {
             public int Id { get; set; }
             public string Name { get; set; }

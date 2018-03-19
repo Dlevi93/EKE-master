@@ -24,7 +24,7 @@ export class WorkflowGuard implements CanActivate {
         let firstPath = this.workflowService.getFirstInvalidStep(path);
         if (firstPath.length > 0) {
             console.log("Redirected to '" + firstPath + "' path which it is the first invalid step.");
-            let url = `/${firstPath}`;
+            let url = `registration/${firstPath}`;
             this.router.navigate([url]);
             return false;
         };
