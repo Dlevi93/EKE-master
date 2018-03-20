@@ -1,5 +1,4 @@
 ﻿import { Component, OnInit, Inject, Input } from '@angular/core';
-import { Http } from '@angular/http';
 import { CalendarModule } from 'primeng/calendar';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { NavbarComponent } from '../registrationflow/navbar/navbar.component';

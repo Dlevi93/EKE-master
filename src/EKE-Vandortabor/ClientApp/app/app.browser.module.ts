@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AppModuleShared } from './app.shared.module';
 import { AppComponent } from './components/app/app.component';
 
@@ -7,6 +8,7 @@ import { AppComponent } from './components/app/app.component';
     bootstrap: [ AppComponent ],
     imports: [
         BrowserModule,
+        NoopAnimationsModule,
         AppModuleShared,
     ],
     providers: [

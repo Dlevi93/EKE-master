@@ -1,29 +1,30 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { Http } from '@angular/http';
-import { DropdownModule } from 'primeng/dropdown';
-
+import { HttpClient } from '@angular/common/http'; 
 import { FormDataService } from '../data/formData.service';
 
 @Component({
-    selector: 'mt-wizard-personaltrip'
-    , templateUrl: './personaltrip.component.html'
+    selector: 'mt-wizard-personaltrip',
+    templateUrl: './personaltrip.component.html',
+    styleUrls: ['./personaltrip.component.css']
 })
 
 export class PersonalTripComponent implements OnInit {
-    public memberships: Membership[];
-    public accomodationTypes: AccomodationType[];
+    memberships: Membership[] = [];
+    accomodationTypes: AccomodationType[];
+
     selectedValueMembership: Membership;
     selectedAccomodationTypes: AccomodationType;
+
     workType: string;
     form: any;
 
-    constructor(private router: Router, private formDataService: FormDataService, http: Http, @Inject('BASE_URL') baseUrl: string) {
+    constructor(private router: Router, private formDataService: FormDataService, http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
         http.get(baseUrl + 'api/SampleData/Memberships').subscribe(result => {
-            this.memberships = result.json() as Membership[];
+            this.memberships = result as Membership[];
         }, error => console.error(error));
         http.get(baseUrl + 'api/SampleData/AccomodationTypes').subscribe(result => {
-            this.accomodationTypes = result.json() as AccomodationType[];
+            this.accomodationTypes = result as AccomodationType[];
         }, error => console.error(error));
     }
 

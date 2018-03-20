@@ -4,17 +4,25 @@
             <h4 class="head text-center">2. l&eacute;p&eacute;s: T&aacute;borral kapcsolatos adatok kit&ouml;lt&eacute;se</h4>
             <br />
             <div class='row'>
-                <p-dropdown [options]="memberships" [(ngModel)]="selectedValueMembership" optionLabel="name" [showClear]="true"></p-dropdown>
-
                 <div class='col-xs-offset-4 col-xs-10 col-sm-offset-5 col-sm-4'>
                     <div class="row">
                         <div class='col-xs-12 col-sm-6'>
                             <label class="control-label" for="firstname">Vezet&eacute;kn&eacute;v</label>
-                            <p-dropdown [options]="memberships" [(ngModel)]="selectedValueMembership" optionLabel="name" [showClear]="true"></p-dropdown>
+                            <ng-select [items]="memberships"
+                                       bindLabel="name"
+                                       bindValue="id"
+                                       [(ngModel)]="selectedValueMembership" name="pizda">
+                            </ng-select>
                         </div>
                         <div class='col-xs-12 col-sm-6'>
-                            <label class="control-label" for="firstname">Vezet&eacute;kn&eacute;v</label>
-                            <p-dropdown [options]="accomodationTypes" [(ngModel)]="selectedAccomodationTypes" optionLabel="name"></p-dropdown>
+                            <div class="form-group">
+                                <label class="control-label" for="firstname">Vezet&eacute;kn&eacute;v</label>
+                                <ng-select [items]="accomodationTypes"
+                                           bindLabel="name"
+                                           bindValue="id"
+                                           [(ngModel)]="selectedAccomodationTypes" name="pizda2">
+                                </ng-select>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -26,3 +34,7 @@
         </div>
     </div>
 </form>
+
+<script>
+    $(".selectpicker").selectpicker();
+</script>
