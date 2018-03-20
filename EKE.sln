@@ -35,6 +35,27 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EKE-WebApi", "src\EKE-WebAp
 		{03BFE44F-9AAC-4400-9A02-7AECCC3497CA} = {03BFE44F-9AAC-4400-9A02-7AECCC3497CA}
 	EndProjectSection
 EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "angular", "angular\", "{34826842-DDE8-414F-B1F4-980CA9AE61DD}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_52099"
+		Debug.AspNetCompiler.PhysicalPath = "angular\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_52099\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_52099"
+		Release.AspNetCompiler.PhysicalPath = "angular\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_52099\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "52099"
+		SlnRelativePath = "angular\"
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,6 +94,10 @@ Global
 		{E0ADDC7A-B30E-4483-A4BB-E454AD1819AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E0ADDC7A-B30E-4483-A4BB-E454AD1819AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E0ADDC7A-B30E-4483-A4BB-E454AD1819AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34826842-DDE8-414F-B1F4-980CA9AE61DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34826842-DDE8-414F-B1F4-980CA9AE61DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34826842-DDE8-414F-B1F4-980CA9AE61DD}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{34826842-DDE8-414F-B1F4-980CA9AE61DD}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
