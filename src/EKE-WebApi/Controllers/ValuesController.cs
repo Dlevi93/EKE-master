@@ -46,13 +46,19 @@ namespace EKE_WebApi.Controllers
             });
         }
 
-
-        [HttpPost]
-        public IActionResult Add([FromBody] AddUser model)
+        [HttpGet("[action]")]
+        public IEnumerable<TripResponse> Trips()
         {
-            return null;
+            var result = _vtServices.GetAllTrips();
+            return result.Data.Select(x => new TripResponse
+            {
+                Id = x.Id,
+                Name = x.Name,
+                Description = x.Description,
+                Length = x.Length,
+                Price = x.Price
+            });
         }
-
 
         public class MembershipResponse
         {
@@ -68,10 +74,13 @@ namespace EKE_WebApi.Controllers
             public int Enum { get; set; }
         }
 
-        public class AddUser
+        public class TripResponse
         {
-            public string name { get; set; }
-            public DateTime birthdate { get; set; }
+            public int Id { get; set; }
+            public string Name { get; set; }
+            public string Description { get; set; }
+            public int Length { get; set; }
+            public decimal Price { get; set; }
         }
     }
 }

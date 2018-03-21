@@ -12,6 +12,8 @@ namespace EKE.Service.Services.Vt
         Result<List<VtAccomodationType>> GetAllAccomodationTypes();
 
         Result<List<VtMembership>> GetAllMemberships();
+
+        Result<List<VtTrip>> GetAllTrips();
     }
 
     public class VtServices : IVtServices
@@ -44,6 +46,18 @@ namespace EKE.Service.Services.Vt
             catch (Exception ex)
             {
                 return new Result<List<VtMembership>>(ResultStatus.ERROR, ex.Message);
+            }
+        }
+
+        public Result<List<VtTrip>> GetAllTrips()
+        {
+            try
+            {
+                return new Result<List<VtTrip>>(_unitOfWork.TripRepository.GetAllIncluding(x => x.Attributes, x => x.Category, x => x.Difficulty, x => x.MediaElements, x => x.Spots).ToList());
+            }
+            catch (Exception ex)
+            {
+                return new Result<List<VtTrip>>(ResultStatus.ERROR, ex.Message);
             }
         }
     }
