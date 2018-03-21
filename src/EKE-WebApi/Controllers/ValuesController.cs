@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using EKE.Service.Services.Vt;
 using Microsoft.AspNetCore.Mvc;
 
@@ -54,10 +52,42 @@ namespace EKE_WebApi.Controllers
             {
                 Id = x.Id,
                 Name = x.Name,
-                Description = x.Description,
-                Length = x.Length,
-                Price = x.Price
             });
+        }
+
+        [HttpGet("[action]/{id}")]
+        public TripResponse Trip(int id)
+        {
+            var result = _vtServices.GetTrip(id);
+            var tripAttributes = new List<TripAttributesResponse>();
+            foreach (var attribute in result.Data.Attributes)
+            {
+                tripAttributes.Add(new TripAttributesResponse
+                {
+                    EnumId = (int)attribute.Attribute,
+                    Name = attribute.Name
+                });
+            }
+
+            return new TripResponse
+            {
+                Id = result.Data.Id,
+                Name = result.Data.Name,
+                Description = result.Data.Description,
+                Length = result.Data.Length,
+                Price = result.Data.Price,
+                Attributes = tripAttributes,
+                Category = new TripCategoryResponse
+                {
+                    Name = result.Data.Category.Name,
+                    EnumId = (int)result.Data.Category.TripCategory,
+                },
+                Difficulty = new TripDifficultyResponse
+                {
+                    Name = result.Data.Difficulty.Name,
+                    EnumId = (int)result.Data.Difficulty.TripDifficulty,
+                }
+            };
         }
 
         public class MembershipResponse
@@ -81,6 +111,27 @@ namespace EKE_WebApi.Controllers
             public string Description { get; set; }
             public int Length { get; set; }
             public decimal Price { get; set; }
+            public TripCategoryResponse Category { get; set; }
+            public List<TripAttributesResponse> Attributes { get; set; }
+            public TripDifficultyResponse Difficulty { get; set; }
+        }
+
+        public class TripAttributesResponse
+        {
+            public string Name { get; set; }
+            public int EnumId { get; set; } 
+        }
+
+        public class TripCategoryResponse
+        {
+            public string Name { get; set; }
+            public int EnumId { get; set; }
+        }
+
+        public class TripDifficultyResponse
+        {
+            public string Name { get; set; }
+            public int EnumId { get; set; }
         }
     }
 }
