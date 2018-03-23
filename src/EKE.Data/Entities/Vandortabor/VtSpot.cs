@@ -8,5 +8,7 @@ namespace EKE.Data.Entities.Vandortabor
         public int Id { get; set; }
         public VtDays Day { get; set; }
         public int Spots { get; set; }
+
+        public virtual VtTrip Trip { get; set; }
     }
 }

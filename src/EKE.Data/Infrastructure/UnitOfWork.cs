@@ -26,6 +26,8 @@ namespace EKE.Data.Infrastructure
         private IVtAccomodationTypeRepository _accomodationTypeRepository;
         private IVtMembershipRepository _membershipRepository;
         private IVtTripRepository _tripRepository;
+        private IVtUserRepository _userRepository;
+        private IVtSpotRepository _spotRepository;
 
         public UnitOfWork(BaseDbContext dbContext)
         {
@@ -46,6 +48,8 @@ namespace EKE.Data.Infrastructure
         public IVtAccomodationTypeRepository AccomodationTypeRepository => _accomodationTypeRepository ?? (_accomodationTypeRepository = new VtAccomodationTypeRepository(_dbContext));
         public IVtMembershipRepository MembershipRepository => _membershipRepository ?? (_membershipRepository = new VtMembershipRepository(_dbContext));
         public IVtTripRepository TripRepository => _tripRepository ?? (_tripRepository = new VtTripRepository(_dbContext));
+        public IVtUserRepository UserRepository => _userRepository ?? (_userRepository = new VtUserRepository(_dbContext));
+        public IVtSpotRepository SpotRepository => _spotRepository ?? (_spotRepository = new VtSpotRepository(_dbContext));
 
         public void SaveChanges()
         {

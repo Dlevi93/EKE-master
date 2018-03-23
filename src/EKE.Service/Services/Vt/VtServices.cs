@@ -15,6 +15,8 @@ namespace EKE.Service.Services.Vt
 
         Result<List<VtTrip>> GetAllTrips();
         Result<VtTrip> GetTrip(int id);
+
+        Result AddUser(VtUser user);
     }
 
     public class VtServices : IVtServices
@@ -24,6 +26,30 @@ namespace EKE.Service.Services.Vt
         public VtServices(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
+        }
+
+        public Result AddUser(VtUser user)
+        {
+            try
+            {
+                var spots = new List<VtSpot>();
+                foreach (var trip in user.Trips)
+                {
+                    var spot = _unitOfWork.SpotRepository.GetAllIncludingPred(x => x.Day == trip.Day && x.Trip.Id == trip.Trip.Id, y => y.Trip).FirstOrDefault();
+                    if (spot != null) spots.Add(spot);
+                }
+
+                user.AccomodationType = _unitOfWork.AccomodationTypeRepository.GetById(user.AccomodationType.Id);
+                user.Membership = _unitOfWork.MembershipRepository.GetById(user.Membership.Id);
+                user.Trips = spots;
+                _unitOfWork.UserRepository.Add(user);
+                _unitOfWork.SaveChanges();
+                return new Result(ResultStatus.OK);
+            }
+            catch (Exception ex)
+            {
+                return new Result(ResultStatus.ERROR, ex.Message);
+            }
         }
 
         public Result<List<VtAccomodationType>> GetAllAccomodationTypes()

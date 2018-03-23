@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using EKE.Service.Services.Vt;
+using EKE_WebApi.Mappers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EKE_WebApi.Controllers
@@ -69,6 +72,16 @@ namespace EKE_WebApi.Controllers
                 });
             }
 
+            var spots = new List<SpotsResponse>();
+            foreach (var spot in result.Data.Spots)
+            {
+                spots.Add(new SpotsResponse
+                {
+                    Day = (int)spot.Day,
+                    Spots = spot.Spots
+                });
+            }
+
             return new TripResponse
             {
                 Id = result.Data.Id,
@@ -86,8 +99,38 @@ namespace EKE_WebApi.Controllers
                 {
                     Name = result.Data.Difficulty.Name,
                     EnumId = (int)result.Data.Difficulty.TripDifficulty,
-                }
+                },
+                Spots = spots
             };
+        }
+
+        [HttpPost]
+        public IActionResult Add([FromBody] UserRequest model)
+        {
+            var result = _vtServices.AddUser(VtUserMapper.ToUser(model));
+            return Ok();
+        }
+
+
+        public class UserRequest
+        {
+            public string FirstName { get; set; }
+            public string LastName { get; set; }
+            public string Email { get; set; }
+            public DateTime BirthDate { get; set; }
+            public string City { get; set; }
+            public string Country { get; set; }
+            public string Phoneno { get; set; }
+            public string Cnp { get; set; }
+            public MembershipResponse Member { get; set; }
+            public AccomodationTypeResponse Accomodation { get; set; }
+            public string CarNo { get; set; }
+            public string TagNo { get; set; }
+            public string Notes { get; set; }
+
+            public TripResponse Trip1 { get; set; }
+            public TripResponse Trip2 { get; set; }
+            public TripResponse Trip3 { get; set; }
         }
 
         public class MembershipResponse
@@ -114,12 +157,19 @@ namespace EKE_WebApi.Controllers
             public TripCategoryResponse Category { get; set; }
             public List<TripAttributesResponse> Attributes { get; set; }
             public TripDifficultyResponse Difficulty { get; set; }
+            public List<SpotsResponse> Spots { get; set; }
         }
 
         public class TripAttributesResponse
         {
             public string Name { get; set; }
-            public int EnumId { get; set; } 
+            public int EnumId { get; set; }
+        }
+
+        public class SpotsResponse
+        {
+            public int Day { get; set; }
+            public int Spots { get; set; }
         }
 
         public class TripCategoryResponse

@@ -29,6 +29,8 @@ namespace EKE.Data.Infrastructure
         IVtAccomodationTypeRepository AccomodationTypeRepository { get; }
         IVtMembershipRepository MembershipRepository { get; }
         IVtTripRepository TripRepository { get; }
+        IVtUserRepository UserRepository { get; }
+        IVtSpotRepository SpotRepository { get; }
 
         void SaveChanges();
     }
