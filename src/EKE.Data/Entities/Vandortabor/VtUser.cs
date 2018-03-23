@@ -22,6 +22,15 @@ namespace EKE.Data.Entities.Vandortabor
         public virtual VtMembership Membership { get; set; }
         public virtual VtAccomodationType AccomodationType { get; set; }
 
-        public virtual List<VtSpot> Trips { get; set; }
+        public virtual IEnumerable<VtUserSpots> Spots { get; set; }
+    }
+
+    public class VtUserSpots
+    {
+        public int UserId { get; set; }
+        public VtUser User { get; set; }
+
+        public int SpotId { get; set; }
+        public VtSpot Spot { get; set; }
     }
 }

@@ -69,6 +69,19 @@ namespace EKE.Data
                 .HasOne(pt => pt.Tag)
                 .WithMany(t => t.ArticleTags)
                 .HasForeignKey(pt => pt.TagId);
+
+            modelBuilder.Entity<VtUserSpots>()
+            .HasKey(t => new { t.UserId, t.SpotId });
+
+            modelBuilder.Entity<VtUserSpots>()
+                .HasOne(pt => pt.User)
+                .WithMany(p => p.Spots)
+                .HasForeignKey(pt => pt.UserId);
+
+            modelBuilder.Entity<VtUserSpots>()
+                .HasOne(pt => pt.Spot)
+                .WithMany(t => t.Users)
+                .HasForeignKey(pt => pt.SpotId);
         }
 
         public virtual void Commit()

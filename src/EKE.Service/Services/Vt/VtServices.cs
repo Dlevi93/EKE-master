@@ -17,6 +17,7 @@ namespace EKE.Service.Services.Vt
         Result<VtTrip> GetTrip(int id);
 
         Result AddUser(VtUser user);
+        Result<VtUser> GetUser(int id);
     }
 
     public class VtServices : IVtServices
@@ -32,16 +33,16 @@ namespace EKE.Service.Services.Vt
         {
             try
             {
-                var spots = new List<VtSpot>();
-                foreach (var trip in user.Trips)
+                var spots = new List<VtUserSpots>();
+                foreach (var trip in user.Spots)
                 {
-                    var spot = _unitOfWork.SpotRepository.GetAllIncludingPred(x => x.Day == trip.Day && x.Trip.Id == trip.Trip.Id, y => y.Trip).FirstOrDefault();
-                    if (spot != null) spots.Add(spot);
+                    var spot = _unitOfWork.SpotRepository.GetAllIncludingPred(x => x.Day == trip.Spot.Day && x.Trip.Id == trip.Spot.Trip.Id, y => y.Trip).FirstOrDefault();
+                    if (spot != null) spots.Add(new VtUserSpots { Spot = spot, SpotId = spot.Id });
                 }
 
                 user.AccomodationType = _unitOfWork.AccomodationTypeRepository.GetById(user.AccomodationType.Id);
                 user.Membership = _unitOfWork.MembershipRepository.GetById(user.Membership.Id);
-                user.Trips = spots;
+                user.Spots = spots;
                 _unitOfWork.UserRepository.Add(user);
                 _unitOfWork.SaveChanges();
                 return new Result(ResultStatus.OK);
@@ -97,6 +98,18 @@ namespace EKE.Service.Services.Vt
             catch (Exception ex)
             {
                 return new Result<VtTrip>(ResultStatus.ERROR, ex.Message);
+            }
+        }
+
+        public Result<VtUser> GetUser(int id)
+        {
+            try
+            {
+                return new Result<VtUser>(_unitOfWork.UserRepository.GetByIdIncluding(id, x => x.Spots, x => x.Membership, x => x.AccomodationType));
+            }
+            catch (Exception ex)
+            {
+                return new Result<VtUser>(ResultStatus.ERROR, ex.Message);
             }
         }
     }

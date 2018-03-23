@@ -111,6 +111,13 @@ namespace EKE_WebApi.Controllers
             return Ok();
         }
 
+        [HttpGet("[action]/{id}")]
+        public IActionResult GetUser(int id)
+        {
+            var result = _vtServices.GetUser(id);
+            return new JsonResult(result.Data);
+        }
+
 
         public class UserRequest
         {

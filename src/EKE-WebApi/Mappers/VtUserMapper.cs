@@ -20,7 +20,7 @@ namespace EKE_WebApi.Mappers
                 Id = request.Member.Id,
             };
 
-            var trips = new List<VtSpot>();
+            var trips = new List<VtUserSpots>();
             var spot1 = new VtSpot
             {
                 Day = VtDays.Tuesday,
@@ -36,9 +36,9 @@ namespace EKE_WebApi.Mappers
                 Day = VtDays.Thursday,
                 Trip = new VtTrip { Id = request.Trip3?.Id ?? 0 }
             };
-            trips.Add(spot1);
-            trips.Add(spot2);
-            trips.Add(spot3);
+            trips.Add(new VtUserSpots() { Spot = spot1, SpotId = spot1.Id });
+            trips.Add(new VtUserSpots() { Spot = spot2, SpotId = spot2.Id });
+            trips.Add(new VtUserSpots() { Spot = spot3, SpotId = spot3.Id });
 
             return new VtUser
             {
@@ -55,7 +55,7 @@ namespace EKE_WebApi.Mappers
                 Note = request.Notes,
                 PhoneNumber = request.Phoneno,
                 RegistrationDate = DateTime.Now,
-                Trips = trips
+                Spots = trips
             };
         }
     }
