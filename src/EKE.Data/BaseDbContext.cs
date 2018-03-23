@@ -70,6 +70,7 @@ namespace EKE.Data
                 .WithMany(t => t.ArticleTags)
                 .HasForeignKey(pt => pt.TagId);
 
+            //Vt Users to spots relationship
             modelBuilder.Entity<VtUserSpots>()
             .HasKey(t => new { t.UserId, t.SpotId });
 
