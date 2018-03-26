@@ -46,7 +46,8 @@
     {
         konnyu_tura = 0,
         kozepesen_nehez_tura = 1,
-        kozepes_tura = 2
+        kozepes_tura = 2,
+        nehez_tura = 3,
     }
 
     public enum VtTripCategories

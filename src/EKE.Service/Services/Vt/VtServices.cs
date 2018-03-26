@@ -93,7 +93,14 @@ namespace EKE.Service.Services.Vt
         {
             try
             {
-                return new Result<VtTrip>(_unitOfWork.TripRepository.GetByIdIncluding(id, x => x.Attributes, x => x.Category, x => x.Difficulty, x => x.MediaElements, x => x.Spots));
+                var trip = _unitOfWork.TripRepository.GetByIdIncluding(id, x => x.Attributes, x => x.Category, x => x.Difficulty, x => x.MediaElements, x => x.Spots);
+
+                foreach (var attribute in trip.Attributes)
+                {
+                    attribute.Attribute = _unitOfWork.AttributeRepository.GetById(attribute.AttributeId);
+                }
+
+                return new Result<VtTrip>(trip);
             }
             catch (Exception ex)
             {

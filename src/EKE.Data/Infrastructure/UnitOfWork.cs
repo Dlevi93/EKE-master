@@ -28,6 +28,7 @@ namespace EKE.Data.Infrastructure
         private IVtTripRepository _tripRepository;
         private IVtUserRepository _userRepository;
         private IVtSpotRepository _spotRepository;
+        private IVtAttributeRepository _attributeRepository;
 
         public UnitOfWork(BaseDbContext dbContext)
         {
@@ -50,6 +51,7 @@ namespace EKE.Data.Infrastructure
         public IVtTripRepository TripRepository => _tripRepository ?? (_tripRepository = new VtTripRepository(_dbContext));
         public IVtUserRepository UserRepository => _userRepository ?? (_userRepository = new VtUserRepository(_dbContext));
         public IVtSpotRepository SpotRepository => _spotRepository ?? (_spotRepository = new VtSpotRepository(_dbContext));
+        public IVtAttributeRepository AttributeRepository => _attributeRepository ?? (_attributeRepository = new VtAttributeRepository(_dbContext));
 
         public void SaveChanges()
         {

@@ -31,6 +31,7 @@ namespace EKE.Data.Infrastructure
         IVtTripRepository TripRepository { get; }
         IVtUserRepository UserRepository { get; }
         IVtSpotRepository SpotRepository { get; }
+        IVtAttributeRepository AttributeRepository { get; }
 
         void SaveChanges();
     }

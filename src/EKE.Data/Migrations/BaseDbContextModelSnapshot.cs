@@ -402,6 +402,20 @@ namespace EKE.Data.Migrations
                     b.ToTable("Vt_AccomodationType");
                 });
 
+            modelBuilder.Entity("EKE.Data.Entities.Vandortabor.VtAttribute", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("Attribute");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Vt_TripAttribute");
+                });
+
             modelBuilder.Entity("EKE.Data.Entities.Vandortabor.VtMembership", b =>
                 {
                     b.Property<int>("Id")
@@ -464,24 +478,6 @@ namespace EKE.Data.Migrations
                     b.ToTable("Vt_Trip");
                 });
 
-            modelBuilder.Entity("EKE.Data.Entities.Vandortabor.VtTripAttribute", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("Attribute");
-
-                    b.Property<string>("Name");
-
-                    b.Property<int?>("VtTripId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("VtTripId");
-
-                    b.ToTable("Vt_TripAttribute");
-                });
-
             modelBuilder.Entity("EKE.Data.Entities.Vandortabor.VtTripCategory", b =>
                 {
                     b.Property<int>("Id")
@@ -508,6 +504,19 @@ namespace EKE.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Vt_TripDifficulty");
+                });
+
+            modelBuilder.Entity("EKE.Data.Entities.Vandortabor.VtTripToAttributes", b =>
+                {
+                    b.Property<int>("TripId");
+
+                    b.Property<int>("AttributeId");
+
+                    b.HasKey("TripId", "AttributeId");
+
+                    b.HasIndex("AttributeId");
+
+                    b.ToTable("VtTripToAttributes");
                 });
 
             modelBuilder.Entity("EKE.Data.Entities.Vandortabor.VtUser", b =>
@@ -784,11 +793,17 @@ namespace EKE.Data.Migrations
                         .HasForeignKey("VtYearId");
                 });
 
-            modelBuilder.Entity("EKE.Data.Entities.Vandortabor.VtTripAttribute", b =>
+            modelBuilder.Entity("EKE.Data.Entities.Vandortabor.VtTripToAttributes", b =>
                 {
-                    b.HasOne("EKE.Data.Entities.Vandortabor.VtTrip")
+                    b.HasOne("EKE.Data.Entities.Vandortabor.VtAttribute", "Attribute")
+                        .WithMany("Trips")
+                        .HasForeignKey("AttributeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("EKE.Data.Entities.Vandortabor.VtTrip", "Trip")
                         .WithMany("Attributes")
-                        .HasForeignKey("VtTripId");
+                        .HasForeignKey("TripId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("EKE.Data.Entities.Vandortabor.VtUser", b =>

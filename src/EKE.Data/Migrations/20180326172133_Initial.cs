@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace EKE.Data.Migrations
 {
-    public partial class Users : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -174,6 +174,20 @@ namespace EKE.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Vt_Membership", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Vt_TripAttribute",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Attribute = table.Column<int>(nullable: false),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Vt_TripAttribute", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -525,27 +539,6 @@ namespace EKE.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Vt_TripAttribute",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Attribute = table.Column<int>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    VtTripId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Vt_TripAttribute", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Vt_TripAttribute_Vt_Trip_VtTripId",
-                        column: x => x.VtTripId,
-                        principalTable: "Vt_Trip",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Vt_User",
                 columns: table => new
                 {
@@ -587,6 +580,30 @@ namespace EKE.Data.Migrations
                         principalTable: "Vt_Trip",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "VtTripToAttributes",
+                columns: table => new
+                {
+                    TripId = table.Column<int>(nullable: false),
+                    AttributeId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_VtTripToAttributes", x => new { x.TripId, x.AttributeId });
+                    table.ForeignKey(
+                        name: "FK_VtTripToAttributes_Vt_TripAttribute_AttributeId",
+                        column: x => x.AttributeId,
+                        principalTable: "Vt_TripAttribute",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_VtTripToAttributes_Vt_Trip_TripId",
+                        column: x => x.TripId,
+                        principalTable: "Vt_Trip",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -824,11 +841,6 @@ namespace EKE.Data.Migrations
                 column: "VtYearId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Vt_TripAttribute_VtTripId",
-                table: "Vt_TripAttribute",
-                column: "VtTripId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Vt_User_AccomodationTypeId",
                 table: "Vt_User",
                 column: "AccomodationTypeId");
@@ -842,6 +854,11 @@ namespace EKE.Data.Migrations
                 name: "IX_Vt_User_VtTripId",
                 table: "Vt_User",
                 column: "VtTripId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_VtTripToAttributes_AttributeId",
+                table: "VtTripToAttributes",
+                column: "AttributeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_VtUserSpots_SpotId",
@@ -885,7 +902,7 @@ namespace EKE.Data.Migrations
                 name: "Synonyms");
 
             migrationBuilder.DropTable(
-                name: "Vt_TripAttribute");
+                name: "VtTripToAttributes");
 
             migrationBuilder.DropTable(
                 name: "VtUserSpots");
@@ -904,6 +921,9 @@ namespace EKE.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "M_Element");
+
+            migrationBuilder.DropTable(
+                name: "Vt_TripAttribute");
 
             migrationBuilder.DropTable(
                 name: "Vt_Spot");
