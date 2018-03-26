@@ -18,9 +18,18 @@ namespace EKE.Data.Entities.Vandortabor
 
         public virtual List<VtSpot> Spots { get; set; }
 
-        public virtual IEnumerable<VtTripAttribute> Attributes { get; set; }
+        public virtual IEnumerable<VtTripToAttributes> Attributes { get; set; }
         public virtual IEnumerable<MediaElement> MediaElements { get; set; }
 
         public virtual IEnumerable<VtUser> Users { get; set; }
+    }
+
+    public class VtTripToAttributes
+    {
+        public int TripId { get; set; }
+        public VtTrip Trip { get; set; }
+
+        public int AttributeId { get; set; }
+        public VtAttribute Attribute { get; set; }
     }
 }

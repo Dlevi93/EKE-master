@@ -29,7 +29,7 @@ namespace EKE.Data
         DbSet<VtTrip> Vt_Trip { get; set; }
         DbSet<VtUser> Vt_User { get; set; }
         DbSet<VtYear> Vt_Year { get; set; }
-        DbSet<VtTripAttribute> Vt_TripAttribute { get; set; }
+        DbSet<VtAttribute> Vt_TripAttribute { get; set; }
         DbSet<VtSpot> Vt_Spot { get; set; }
         DbSet<VtAccomodationType> Vt_AccomodationType { get; set; }
         DbSet<VtMembership> Vt_Membership { get; set; }
@@ -83,6 +83,20 @@ namespace EKE.Data
                 .HasOne(pt => pt.Spot)
                 .WithMany(t => t.Users)
                 .HasForeignKey(pt => pt.SpotId);
+
+            //Vt Trips to attributes relationship
+            modelBuilder.Entity<VtTripToAttributes>()
+            .HasKey(t => new { t.TripId, t.AttributeId });
+
+            modelBuilder.Entity<VtTripToAttributes>()
+                .HasOne(pt => pt.Trip)
+                .WithMany(p => p.Attributes)
+                .HasForeignKey(pt => pt.TripId);
+
+            modelBuilder.Entity<VtTripToAttributes>()
+                .HasOne(pt => pt.Attribute)
+                .WithMany(t => t.Trips)
+                .HasForeignKey(pt => pt.AttributeId);
         }
 
         public virtual void Commit()

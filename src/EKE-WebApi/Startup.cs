@@ -54,7 +54,7 @@ namespace EKE_WebApi
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseCors(options => options.WithOrigins("http://localhost:4200/", "http://localhost:49223/").AllowAnyMethod());
+            app.UseCors(options => options.WithOrigins("http://localhost:4200/").AllowAnyMethod());
             app.UseMvc();
         }
     }

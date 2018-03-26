@@ -2,14 +2,51 @@
 {
     public enum VtTripAttributes
     {
-        Default = 0,
+        barlang = 0,
+        borviz = 1,
+        csapatban = 2,
+        erdekes_szikla = 3,
+        feltaro = 4,
+        folyo = 5,
+        geolada = 6,
+        gps = 7,
+        hatartura = 8,
+        hegycsucs = 9,
+        hid = 10,
+        honismeret_erdekes = 11,
+        kek_haromszog = 12,
+        kek_kereszt = 13,
+        kek_pont = 14,
+        kek_sav = 15,
+        kigyo = 16,
+        kilato = 17,
+        korosztaly_minden = 18,
+        lancos = 19,
+        medve = 20,
+        menedekhaz = 21,
+        menedekhely = 22,
+        parkany = 23,
+        parkolo = 24,
+        pihenohely = 25,
+        piros_haromszog = 26,
+        piros_kereszt = 27,
+        piros_pont = 28,
+        piros_pont_2 = 29,
+        piros_sav = 30,
+        sarga_haromszog = 31,
+        sarga_kereszt = 32,
+        sarga_pont = 33,
+        sarga_sav = 34,
+        termeszetvedelmi_terulet = 35,
+        vadallatok = 36,
+        vizeses = 37
     }
 
     public enum VtTripDifficulties
     {
-        Easy = 0,
-        Medium = 1,
-        Hard = 2
+        konnyu_tura = 0,
+        kozepesen_nehez_tura = 1,
+        kozepes_tura = 2
     }
 
     public enum VtTripCategories

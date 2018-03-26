@@ -67,8 +67,8 @@ namespace EKE_WebApi.Controllers
             {
                 tripAttributes.Add(new TripAttributesResponse
                 {
-                    EnumId = (int)attribute.Attribute,
-                    Name = attribute.Name
+                    EnumId = (int)attribute.Attribute.Attribute,
+                    Name = attribute.Attribute.Name
                 });
             }
 
