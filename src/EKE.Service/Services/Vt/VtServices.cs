@@ -13,11 +13,13 @@ namespace EKE.Service.Services.Vt
 
         Result<List<VtMembership>> GetAllMemberships();
 
-        Result<List<VtTrip>> GetAllTrips();
+        Result<List<VtTrip>> GetAllTrips(int day);
         Result<VtTrip> GetTrip(int id);
 
         Result AddUser(VtUser user);
         Result<VtUser> GetUser(int id);
+
+        Result<VtSpot> GetRemainingSpots(int tripId, int day);
     }
 
     public class VtServices : IVtServices
@@ -77,11 +79,11 @@ namespace EKE.Service.Services.Vt
             }
         }
 
-        public Result<List<VtTrip>> GetAllTrips()
+        public Result<List<VtTrip>> GetAllTrips(int day)
         {
             try
             {
-                return new Result<List<VtTrip>>(_unitOfWork.TripRepository.GetAllIncluding().ToList());
+                return new Result<List<VtTrip>>(_unitOfWork.SpotRepository.GetAllIncludingPred(x => (int)x.Day == day, x => x.Trip).Select(x => x.Trip).ToList());
             }
             catch (Exception ex)
             {
@@ -105,6 +107,20 @@ namespace EKE.Service.Services.Vt
             catch (Exception ex)
             {
                 return new Result<VtTrip>(ResultStatus.ERROR, ex.Message);
+            }
+        }
+
+        public Result<VtSpot> GetRemainingSpots(int tripId, int day)
+        {
+            try
+            {
+                var allSpots = _unitOfWork.SpotRepository.GetAllIncludingPred(x => (int)x.Day == day && x.TripId == tripId, x => x.Users).FirstOrDefault();
+
+                return new Result<VtSpot>(allSpots);
+            }
+            catch (Exception ex)
+            {
+                return new Result<VtSpot>(ResultStatus.ERROR, ex.Message);
             }
         }
 

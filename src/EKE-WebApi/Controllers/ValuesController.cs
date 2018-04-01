@@ -18,11 +18,6 @@ namespace EKE_WebApi.Controllers
             _vtServices = vtServices;
         }
 
-        private static string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
         [HttpGet("[action]")]
         public IEnumerable<MembershipResponse> Memberships()
         {
@@ -47,10 +42,10 @@ namespace EKE_WebApi.Controllers
             });
         }
 
-        [HttpGet("[action]")]
-        public IEnumerable<TripResponse> Trips()
+        [HttpGet("[action]/{day}")]
+        public IEnumerable<TripResponse> Trips(int day)
         {
-            var result = _vtServices.GetAllTrips();
+            var result = _vtServices.GetAllTrips(day);
             return result.Data.Select(x => new TripResponse
             {
                 Id = x.Id,
@@ -58,22 +53,32 @@ namespace EKE_WebApi.Controllers
             });
         }
 
-        [HttpGet("[action]/{id}")]
-        public TripResponse Trip(int id)
+        [HttpGet("[action]/{id}/{day}")]
+        public TripResponse Trip(int id, int day)
         {
             var result = _vtServices.GetTrip(id);
+
+            if (result.Data.Id == 1)
+            {
+                return new TripResponse
+                {
+                    Id = result.Data.Id,
+                    Name = result.Data.Name,
+                };
+            }
+
             var tripAttributes = new List<TripAttributesResponse>();
             foreach (var attribute in result.Data.Attributes)
             {
                 tripAttributes.Add(new TripAttributesResponse
                 {
-                    EnumId = (int)attribute.Attribute.Attribute,
+                    Enum = attribute.Attribute.Attribute.ToString(),
                     Name = attribute.Attribute.Name
                 });
             }
 
             var spots = new List<SpotsResponse>();
-            foreach (var spot in result.Data.Spots)
+            foreach (var spot in result.Data.Spots.Where(x => (int)x.Day == day))
             {
                 spots.Add(new SpotsResponse
                 {
@@ -82,25 +87,39 @@ namespace EKE_WebApi.Controllers
                 });
             }
 
+            var remainingSpots = _vtServices.GetRemainingSpots(id, day);
+
             return new TripResponse
             {
                 Id = result.Data.Id,
                 Name = result.Data.Name,
                 Description = result.Data.Description,
                 Length = result.Data.Length,
+                Time = result.Data.Time,
                 Price = result.Data.Price,
+                Elevation = string.IsNullOrWhiteSpace(result.Data.Elevation) ? "-" : result.Data.Elevation,
+                Age = string.IsNullOrWhiteSpace(result.Data.Age) ? "minden" : result.Data.Age,
                 Attributes = tripAttributes,
                 Category = new TripCategoryResponse
                 {
                     Name = result.Data.Category.Name,
-                    EnumId = (int)result.Data.Category.TripCategory,
+                    Enum = result.Data.Category.TripCategory.ToString(),
                 },
                 Difficulty = new TripDifficultyResponse
                 {
                     Name = result.Data.Difficulty.Name,
-                    EnumId = (int)result.Data.Difficulty.TripDifficulty,
+                    Enum = result.Data.Difficulty.TripDifficulty.ToString(),
                 },
-                Spots = spots
+                Spots = new SpotsResponse
+                {
+                    Day = (int)result.Data.Spots.FirstOrDefault(x => (int)x.Day == day).Day,
+                    Spots = result.Data.Spots.FirstOrDefault(x => (int)x.Day == day).Spots
+                },
+                RemainingSpots = new SpotsResponse
+                {
+                    Day = (int)remainingSpots.Data?.Day,
+                    Spots = remainingSpots.Data?.Spots - remainingSpots.Data?.Users?.Count() ?? 0,
+                }
             };
         }
 
@@ -159,18 +178,22 @@ namespace EKE_WebApi.Controllers
             public int Id { get; set; }
             public string Name { get; set; }
             public string Description { get; set; }
-            public int Length { get; set; }
+            public decimal Length { get; set; }
+            public decimal Time { get; set; }
+            public string Age { get; set; }
+            public string Elevation { get; set; }
             public decimal Price { get; set; }
             public TripCategoryResponse Category { get; set; }
             public List<TripAttributesResponse> Attributes { get; set; }
             public TripDifficultyResponse Difficulty { get; set; }
-            public List<SpotsResponse> Spots { get; set; }
+            public SpotsResponse Spots { get; set; }
+            public SpotsResponse RemainingSpots { get; set; }
         }
 
         public class TripAttributesResponse
         {
             public string Name { get; set; }
-            public int EnumId { get; set; }
+            public string Enum { get; set; }
         }
 
         public class SpotsResponse
@@ -182,13 +205,13 @@ namespace EKE_WebApi.Controllers
         public class TripCategoryResponse
         {
             public string Name { get; set; }
-            public int EnumId { get; set; }
+            public string Enum { get; set; }
         }
 
         public class TripDifficultyResponse
         {
             public string Name { get; set; }
-            public int EnumId { get; set; }
+            public string Enum { get; set; }
         }
     }
 }

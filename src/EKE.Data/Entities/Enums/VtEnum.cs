@@ -52,14 +52,14 @@
 
     public enum VtTripCategories
     {
-        Gyerek = 0,
-        Termeszet = 1,
-        Fotos = 2,
-        Szekeres = 3,
-        Honismeret = 4,
-        Gomba = 5,
-        Bicikli = 6,
-        Extra = 7
+        gyerek = 0,
+        termeszet = 1,
+        fotos = 2,
+        szekeres = 3,
+        honismeret = 4,
+        gomba = 5,
+        bicikli = 6,
+        extra = 7
     }
 
     public enum VtDays

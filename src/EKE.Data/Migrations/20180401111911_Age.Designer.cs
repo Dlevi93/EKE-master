@@ -12,9 +12,10 @@ using System;
 namespace EKE.Data.Migrations
 {
     [DbContext(typeof(BaseDbContext))]
-    partial class BaseDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180401111911_Age")]
+    partial class Age
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -460,8 +461,6 @@ namespace EKE.Data.Migrations
                     b.Property<string>("Description");
 
                     b.Property<int?>("DifficultyId");
-
-                    b.Property<string>("Elevation");
 
                     b.Property<decimal>("Length");
 

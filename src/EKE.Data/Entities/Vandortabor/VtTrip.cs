@@ -9,7 +9,10 @@ namespace EKE.Data.Entities.Vandortabor
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public int Length { get; set; }
+        public decimal Length { get; set; }
+        public decimal Time { get; set; }
+        public string Age { get; set; }
+        public string Elevation { get; set; }
         public decimal Price { get; set; }
 
         public virtual VtTripDifficulty Difficulty { get; set; }
