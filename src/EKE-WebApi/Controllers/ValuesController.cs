@@ -19,6 +19,18 @@ namespace EKE_WebApi.Controllers
         }
 
         [HttpGet("[action]")]
+        public IEnumerable<UserResponse> UserList()
+        {
+            var result = _vtServices.GetAllUsers();
+            return result.Data.Select(x => new UserResponse
+            {
+                Name = x.Name,
+                City = x.City,
+                Member = x.Membership?.Name.ToString() ?? "-",
+            });
+        }
+
+        [HttpGet("[action]")]
         public IEnumerable<MembershipResponse> Memberships()
         {
             var result = _vtServices.GetAllMemberships();
@@ -212,6 +224,13 @@ namespace EKE_WebApi.Controllers
         {
             public string Name { get; set; }
             public string Enum { get; set; }
+        }
+
+        public class UserResponse
+        {
+            public string Name { get; set; }
+            public string City { get; set; }
+            public string Member { get; set; }
         }
     }
 }

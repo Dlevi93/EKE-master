@@ -18,6 +18,7 @@ namespace EKE.Service.Services.Vt
 
         Result AddUser(VtUser user);
         Result<VtUser> GetUser(int id);
+        Result<List<VtUser>> GetAllUsers();
 
         Result<VtSpot> GetRemainingSpots(int tripId, int day);
     }
@@ -133,6 +134,18 @@ namespace EKE.Service.Services.Vt
             catch (Exception ex)
             {
                 return new Result<VtUser>(ResultStatus.ERROR, ex.Message);
+            }
+        }
+
+        public Result<List<VtUser>> GetAllUsers()
+        {
+            try
+            {
+                return new Result<List<VtUser>>(_unitOfWork.UserRepository.GetAllIncluding(x => x.Membership).ToList());
+            }
+            catch (Exception ex)
+            {
+                return new Result<List<VtUser>>(ResultStatus.ERROR, ex.Message);
             }
         }
     }
