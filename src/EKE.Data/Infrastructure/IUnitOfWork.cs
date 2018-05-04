@@ -1,6 +1,7 @@
 ﻿using System;
 using EKE.Data.Repository.General;
 using EKE.Data.Repository.Gyopar;
+using EKE.Data.Repository.Main;
 using EKE.Data.Repository.Muzeum;
 using EKE.Data.Repository.Vt;
 
@@ -32,6 +33,9 @@ namespace EKE.Data.Infrastructure
         IVtUserRepository UserRepository { get; }
         IVtSpotRepository SpotRepository { get; }
         IVtAttributeRepository AttributeRepository { get; }
+
+        //Main
+        IHElementRepository HElementRepository { get; }
 
         void SaveChanges();
     }

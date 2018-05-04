@@ -20,6 +20,7 @@ using System;
 using EKE.Data.Repository.Base;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using EKE.Service.Services.Admin.Main;
 
 namespace EKE_Admin.Web
 {
@@ -57,7 +58,7 @@ namespace EKE_Admin.Web
         private static void RegisterServices(IServiceCollection services)
         {
             //Add Identity
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<BaseDbContext>()
                 .AddDefaultTokenProviders();
             
@@ -72,6 +73,7 @@ namespace EKE_Admin.Web
             services.AddTransient<IMagazineCategoryService, MagazineCategoryService>();
             services.AddTransient<IGeneralService, GeneralService>();
             services.AddTransient<IMuseumService, MuseumService>();
+            services.AddTransient<IMainService, MainService>();
 
             services.AddTransient<IEntityBaseRepository<Magazine>, EntityBaseRepository<Magazine>>();
             services.AddTransient<IEntityBaseRepository<Article>, EntityBaseRepository<Article>>();

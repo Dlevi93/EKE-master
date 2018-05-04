@@ -3,6 +3,7 @@
     public enum ProjectBaseEnum
     {
         Gyopar,
-        Muzeum
+        Muzeum,
+        Main
     }
 }

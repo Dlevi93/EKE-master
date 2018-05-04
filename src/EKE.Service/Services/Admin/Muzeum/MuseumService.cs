@@ -1,4 +1,5 @@
 ﻿using EKE.Data.Entities.Enums;
+using EKE.Data.Entities.Home;
 using EKE.Data.Entities.Museum;
 using EKE.Data.Infrastructure;
 using EKE.Data.Repository;

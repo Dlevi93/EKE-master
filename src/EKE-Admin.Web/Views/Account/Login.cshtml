@@ -3,7 +3,7 @@
 @using Microsoft.AspNetCore.Http.Authentication
 @using Microsoft.AspNetCore.Identity
 @model EKE.Data.Entities.Identity.AccountViewModels.LoginViewModel
-@inject SignInManager<EKE.Data.Entities.ApplicationUser> SignInManager
+@inject SignInManager<IdentityUser> SignInManager
 
 @{
     ViewData["Title"] = "Log in";

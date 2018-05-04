@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using EKE.Service.Services.Vt;
 using EKE_WebApi.Mappers;
+using EKE_WebApi.Models.Registration;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EKE_WebApi.Controllers
 {
+    [Produces("application/json")]
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {
@@ -147,90 +147,6 @@ namespace EKE_WebApi.Controllers
         {
             var result = _vtServices.GetUser(id);
             return new JsonResult(result.Data);
-        }
-
-
-        public class UserRequest
-        {
-            public string FirstName { get; set; }
-            public string LastName { get; set; }
-            public string Email { get; set; }
-            public DateTime BirthDate { get; set; }
-            public string City { get; set; }
-            public string Country { get; set; }
-            public string Phoneno { get; set; }
-            public string Cnp { get; set; }
-            public MembershipResponse Member { get; set; }
-            public AccomodationTypeResponse Accomodation { get; set; }
-            public string CarNo { get; set; }
-            public string TagNo { get; set; }
-            public string Notes { get; set; }
-
-            public TripResponse Trip1 { get; set; }
-            public TripResponse Trip2 { get; set; }
-            public TripResponse Trip3 { get; set; }
-        }
-
-        public class MembershipResponse
-        {
-            public int Id { get; set; }
-            public string Name { get; set; }
-            public int Enum { get; set; }
-        }
-
-        public class AccomodationTypeResponse
-        {
-            public int Id { get; set; }
-            public string Name { get; set; }
-            public int Enum { get; set; }
-        }
-
-        public class TripResponse
-        {
-            public int Id { get; set; }
-            public string Name { get; set; }
-            public string Description { get; set; }
-            public decimal Length { get; set; }
-            public decimal Time { get; set; }
-            public string Age { get; set; }
-            public string Elevation { get; set; }
-            public decimal Price { get; set; }
-            public TripCategoryResponse Category { get; set; }
-            public List<TripAttributesResponse> Attributes { get; set; }
-            public TripDifficultyResponse Difficulty { get; set; }
-            public SpotsResponse Spots { get; set; }
-            public SpotsResponse RemainingSpots { get; set; }
-        }
-
-        public class TripAttributesResponse
-        {
-            public string Name { get; set; }
-            public string Enum { get; set; }
-        }
-
-        public class SpotsResponse
-        {
-            public int Day { get; set; }
-            public int Spots { get; set; }
-        }
-
-        public class TripCategoryResponse
-        {
-            public string Name { get; set; }
-            public string Enum { get; set; }
-        }
-
-        public class TripDifficultyResponse
-        {
-            public string Name { get; set; }
-            public string Enum { get; set; }
-        }
-
-        public class UserResponse
-        {
-            public string Name { get; set; }
-            public string City { get; set; }
-            public string Member { get; set; }
         }
     }
 }

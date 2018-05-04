@@ -4,6 +4,7 @@ using EKE.Data.Entities.Gyopar;
 using EKE.Data.Entities.Identity.AccountViewModels;
 using EKE.Data.Entities.Museum;
 using EKE.Service.ServiceModel;
+using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
 
 namespace EKE_Admin.Web.ViewModels.Configuration
@@ -38,10 +39,10 @@ namespace EKE_Admin.Web.ViewModels.Configuration
             CreateMap<List<Magazine>, MagazineVM>()
                 .ForMember(dest => dest.Magazines, opt => opt.MapFrom(src => src));
 
-            CreateMap<List<ApplicationUser>, UserManagementVM>()
+            CreateMap<List<IdentityUser>, UserManagementVM>()
                 .ForMember(dest => dest.AppUser, opt => opt.MapFrom(src => src));
             CreateMap<RegisterViewModel, UserManagementVM>();
-            CreateMap<List<ApplicationRole>, UserManagementVM>()
+            CreateMap<List<IdentityRole>, UserManagementVM>()
                .ForMember(dest => dest.Roles, opt => opt.MapFrom(src => src));
 
             CreateMap<Article, ArticleVM>()

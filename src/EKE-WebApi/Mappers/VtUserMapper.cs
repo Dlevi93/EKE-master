@@ -1,8 +1,8 @@
 ﻿using EKE.Data.Entities.Enums;
 using EKE.Data.Entities.Vandortabor;
+using EKE_WebApi.Models.Registration;
 using System;
 using System.Collections.Generic;
-using static EKE_WebApi.Controllers.ValuesController;
 
 namespace EKE_WebApi.Mappers
 {

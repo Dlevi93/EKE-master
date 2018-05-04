@@ -24,6 +24,8 @@
             @if (User.IsInRole("superadmin"))
             {
                 @Html.Partial("Layout/Sidebar/_Superadmin")
+                <li class="header">EKE - Főoldal</li>
+                @Html.Partial("Layout/Sidebar/_Home")
                 <li class="header">EKE - Gyopár</li>
                 @Html.Partial("Layout/Sidebar/_Gyopar")
                 @Html.Partial("Layout/Sidebar/_Order")
@@ -49,6 +51,12 @@
             {
                 <li class="header">EKE - Múzeum</li>
                 @Html.Partial("Layout/Sidebar/_Museum")
+            }
+
+            @if (User.IsInRole("home"))
+            {
+                <li class="header">EKE - Főoldal</li>
+                @Html.Partial("Layout/Sidebar/_Home")
             }
         </ul>
     </section>

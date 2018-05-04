@@ -1,0 +1,27 @@
+﻿@using NonFactors.Mvc.Grid;
+@using EKE.Data.Entities.Enums
+@using Microsoft.AspNetCore.Html
+@model List<EKE.Data.Entities.Home.H_Article>
+@functions{
+        public IHtmlContent ConvertToHtmlType(string input)
+        {
+            var output = input?.Length > 150 ? input.Substring(0, 150) : input;
+            return Html.Raw(output);
+        }
+}
+@(Html
+    .Grid(Model)
+    .Build(columns =>
+    {
+        columns.Add(model => $"<a href='#' class='elemTitleCheck' data-type='text' data-pk=" + model.Id + " data-url='/Museum/Update' data-title='Cím' data-name='ElemTitle'>" + model.Title + "</a>").Titled("Cím").Encoded(false).Filterable(true).Sortable(true);
+        columns.Add(model => $"<a href='#' class='elemAuthorCheck' data-type='text' data-pk=" + model.Id + " data-url='/Museum/Update' data-title='Szerző' data-name='ElemAuthor'>" + model.Author + "</a>").Titled("Szerző").Encoded(false).Filterable(true).Sortable(true);
+        columns.Add(model => $"<a href='#' class='elemCategoryCheck' data-type='select' data-pk=" + model.Id + " data-url='/Museum/Update' data-title='Kategória' data-name='ElemCategory'>" + model.Category.ToString() + "</a>").Titled("Kategória").Encoded(false).Filterable(true).Sortable(true);
+        columns.Add(model => $"<a href='#' class='elemDescriptionCheck' data-type='textarea' data-pk=" + model.Id + " data-url='/Museum/Update' data-title='Leírás' data-name='ElemDescription'>" + Html.Raw(model.Description) + "</a>").Titled("Leírás").Encoded(false).Css("elemDescription");
+        columns.Add(model => $"<a href='#' class='elemDateCheck' data-type='combodate' data-pk=" + model.Id + " data-url='/Museum/Update' data-title='Cím' data-name='ElemDate'>" + model.DateAdded.ToString("yyyy/MM/dd") + "</a>").Titled("Dátum").Encoded(false).Filterable(true).Sortable(true);
+        columns.Add(model => model.MediaElements.Count).Titled("Képek száma");
+        columns.Add(model => $"<input class='cover-uploader' name='files' type='file' data-show-preview='true' multiple data-id=" + model.Id + ">").Titled("Képek feltöltése").Encoded(false);
+        columns.Add(model => Html.ActionLink("Törlés", "DeleteElement", "Museum", new { id = model.Id }, new { @class = "btn btn-default" })).Titled("Opciók").Encoded(false);
+    })
+    .Empty("Üres adattár a megadott paraméterekkel!")
+    //.Pageable()
+)

@@ -12,6 +12,7 @@ namespace EKE.Data.Entities.Enums
 
     public enum NewsCategories
     {
-        Vandortabor = 0,
+        Hír = 1,
+        Esemény = 2
     }
 }

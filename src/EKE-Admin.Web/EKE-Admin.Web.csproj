@@ -3148,8 +3148,4 @@
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.2.1" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\Home\" />
-  </ItemGroup>
-
 </Project>

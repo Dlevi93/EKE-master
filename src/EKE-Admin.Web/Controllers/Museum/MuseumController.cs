@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using EKE.Service.Services.Admin;
 using AutoMapper;
 using EKE.Data.Entities.Gyopar;
 using EKE.Service.Services.Admin.Muzeum;
-using EKE.Data.Entities.Museum;
 using EKE_Admin.Web.ViewModels;
 using EKE.Service.ServiceModel;
 using Microsoft.AspNetCore.Http;
@@ -60,7 +57,7 @@ namespace EKE_Admin.Web.Controllers
             }
 
             // Only grid string query values will be visible here.
-            return PartialView("Partials/_ElementListGrid", elements.Data.OrderByDescending(x => x.Id));
+            return PartialView("Partials/_ElementListGrid", elements.Data.OrderByDescending(x => x.Id).ToList());
         }
 
         public IActionResult ElementCategoryListGrid()

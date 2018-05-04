@@ -1,6 +1,7 @@
 ﻿using System;
 using EKE.Data.Repository.General;
 using EKE.Data.Repository.Gyopar;
+using EKE.Data.Repository.Main;
 using EKE.Data.Repository.Muzeum;
 using EKE.Data.Repository.Vt;
 
@@ -30,6 +31,8 @@ namespace EKE.Data.Infrastructure
         private IVtSpotRepository _spotRepository;
         private IVtAttributeRepository _attributeRepository;
 
+        private IHElementRepository _hElementRepository;
+
         public UnitOfWork(BaseDbContext dbContext)
         {
             _dbContext = dbContext;
@@ -52,6 +55,7 @@ namespace EKE.Data.Infrastructure
         public IVtUserRepository UserRepository => _userRepository ?? (_userRepository = new VtUserRepository(_dbContext));
         public IVtSpotRepository SpotRepository => _spotRepository ?? (_spotRepository = new VtSpotRepository(_dbContext));
         public IVtAttributeRepository AttributeRepository => _attributeRepository ?? (_attributeRepository = new VtAttributeRepository(_dbContext));
+        public IHElementRepository HElementRepository => _hElementRepository ?? (_hElementRepository = new H_ElementRepository(_dbContext));
 
         public void SaveChanges()
         {

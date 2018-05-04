@@ -5,7 +5,6 @@ namespace EKE.Data.Repository.Gyopar
 {
     public interface IArticleRepository : IEntityBaseRepository<Article>
     {
-        
     }
 
     public class ArticleRepository : EntityBaseRepository<Article>, IArticleRepository

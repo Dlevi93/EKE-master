@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
-using EKE.Data.Entities;
 using EKE.Service.Services.Admin;
 using EKE.Data.Entities.Identity.AccountViewModels;
 using EKE_Admin.Web.ViewModels;
@@ -18,18 +17,18 @@ namespace EKE_Admin.Web.Controllers
     [Authorize]
     public class AccountController : Controller
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly RoleManager<ApplicationRole> _roleManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly SignInManager<IdentityUser> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ISmsSender _smsSender;
         private readonly ILogger _logger;
         private readonly IMapper _mapper;
 
         public AccountController(
-            UserManager<ApplicationUser> userManager,
-            RoleManager<ApplicationRole> roleManager,
-            SignInManager<ApplicationUser> signInManager,
+            UserManager<IdentityUser> userManager,
+            RoleManager<IdentityRole> roleManager,
+            SignInManager<IdentityUser> signInManager,
             IEmailSender emailSender,
             ISmsSender smsSender,
             ILoggerFactory loggerFactory,
@@ -48,10 +47,61 @@ namespace EKE_Admin.Web.Controllers
         // GET: /Account/Login
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult Login(string returnUrl = null)
+        public async Task<IActionResult> Login(string returnUrl = null)
         {
+            // await createRolesandUsers();
+
             ViewData["ReturnUrl"] = returnUrl;
             return View();
+        }
+
+        private async Task createRolesandUsers()
+        {
+
+            bool x = await _roleManager.RoleExistsAsync("superadmin");
+            if (!x)
+            {
+
+                // first we create Admin rool    
+                var role = new IdentityRole();
+                role.Name = "superadmin";
+                await _roleManager.CreateAsync(role);
+
+                //Here we create a Admin super user who will maintain the website                   
+
+                var user = new IdentityUser();
+                user.UserName = "superadmin@eke.ma";
+                user.Email = "superadmin@eke.ma";
+
+                string userPWD = "cff41bNG2";
+
+                IdentityResult chkUser = await _userManager.CreateAsync(user, userPWD);
+
+                //Add default User to Role Admin    
+                if (chkUser.Succeeded)
+                {
+                    var result1 = await _userManager.AddToRoleAsync(user, "superadmin");
+                }
+            }
+
+            //// creating Creating Manager role     
+            //x = await _roleManager.RoleExistsAsync("Manager");
+            //if (!x)
+            //{
+            //    var role = new IdentityRole();
+            //    role.Name = "Manager";
+            //    await _roleManager.CreateAsync(role);
+
+            //}
+
+            //// creating Creating Employee role     
+            //x = await _roleManager.RoleExistsAsync("Employee");
+            //if (!x)
+            //{
+            //    var role = new IdentityRole();
+            //    role.Name = "Employee";
+            //    await _roleManager.CreateAsync(role);
+            //}
         }
 
         //
@@ -112,7 +162,7 @@ namespace EKE_Admin.Web.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new IdentityUser { UserName = model.Email, Email = model.Email };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -226,7 +276,7 @@ namespace EKE_Admin.Web.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new IdentityUser { UserName = model.Email, Email = model.Email };
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
@@ -483,8 +533,8 @@ namespace EKE_Admin.Web.Controllers
             foreach (var item in users)
             {
                 var userRoles = await _userManager.GetRolesAsync(item);
-                if (userRoles.Count() > 0)
-                    item.RoleAssigned = userRoles.Aggregate((i, j) => i + " , " + j);
+                if (userRoles.Count() > 0) { }
+                //item.Role = userRoles.Aggregate((i, j) => i + " , " + j);
             }
 
             var allRoles = _roleManager.Roles.ToList();
@@ -511,7 +561,7 @@ namespace EKE_Admin.Web.Controllers
                 if (roles.Count(x => x.Contains("superadmin")) > 0)
                     roles = new[] { "superadmin" };
 
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new IdentityUser { UserName = model.Email, Email = model.Email };
                 var result = await _userManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
@@ -539,15 +589,15 @@ namespace EKE_Admin.Web.Controllers
                     return PartialView("Layout/_ErrorHandling", "Hiba a törlés során. Nem létező felhasználó!");
 
                 var user = await _userManager.FindByIdAsync(id);
-                char separator = ',';
-                if (user.RoleAssigned != null)
-                {
-                    var rolesForUser = user.RoleAssigned.Split(separator);
-                    foreach (var item in rolesForUser)
-                    {
-                        await _userManager.RemoveFromRoleAsync(user, item);
-                    }
-                }
+                //char separator = ',';
+                //if (user.RoleAssigned != null)
+                //{
+                //    var rolesForUser = user.RoleAssigned.Split(separator);
+                //    foreach (var item in rolesForUser)
+                //    {
+                //        await _userManager.RemoveFromRoleAsync(user, item);
+                //    }
+                //}
 
                 await _userManager.DeleteAsync(user);
             }
@@ -566,7 +616,7 @@ namespace EKE_Admin.Web.Controllers
             }
         }
 
-        private Task<ApplicationUser> GetCurrentUserAsync()
+        private Task<IdentityUser> GetCurrentUserAsync()
         {
             return _userManager.GetUserAsync(HttpContext.User);
         }

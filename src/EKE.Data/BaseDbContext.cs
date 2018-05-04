@@ -1,14 +1,15 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using EKE.Data.Entities;
 using EKE.Data.Entities.Gyopar;
 using EKE.Data.Entities.Museum;
-using System;
 using EKE.Data.Entities.Vandortabor;
+using EKE.Data.Entities.Home;
+using Microsoft.AspNetCore.Identity;
+using System;
 
 namespace EKE.Data
 {
-    public class BaseDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>
+    public class BaseDbContext : IdentityDbContext<IdentityUser>
     {
         public BaseDbContext(DbContextOptions<BaseDbContext> options) : base(options) { }
 
@@ -35,6 +36,9 @@ namespace EKE.Data
         DbSet<VtMembership> Vt_Membership { get; set; }
         DbSet<VtTripCategory> Vt_TripCategory { get; set; }
         DbSet<VtTripDifficulty> Vt_TripDifficulty { get; set; }
+
+        DbSet<H_Article> H_Articles { get; set; }
+
         #endregion
 
         //Model configurations

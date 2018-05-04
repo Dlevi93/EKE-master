@@ -24,8 +24,4 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.0.1" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Repository\Home\" />
-  </ItemGroup>
-
 </Project>
