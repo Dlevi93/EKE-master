@@ -87,6 +87,10 @@ namespace EKE.Service.Services
                     gyoparPath = _environment.WebRootPath.Replace("EKE-Admin.Web", "EKE-Muzeum.Web");
                     scope = MediaTypesScope.Museum;
                     break;
+                case ProjectBaseEnum.Main:
+                    gyoparPath = _environment.WebRootPath.Replace("EKE-Admin.Web", "EKE-Home.Web");
+                    scope = MediaTypesScope.Article;
+                    break;
                 default:
                     break;
             }

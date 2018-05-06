@@ -11,8 +11,6 @@ namespace EKE_Admin.Web.Controllers.Main
     {
         private readonly IMainService _mainService;
 
-        public string WebSecurity { get; private set; }
-
         public MainController(IMainService mainService)
         {
             _mainService = mainService;
@@ -48,7 +46,7 @@ namespace EKE_Admin.Web.Controllers.Main
                 model.PublishedBy = User.Identity.Name;
 
                 var result = _mainService.AddElement(model);
-                if (result.IsOk()) return RedirectToAction("Index");
+                if (result.IsOk()) return RedirectToAction("EditElem");
             }
 
             TempData["ErrorMessage"] = string.Format("Hiba a hozzáadás során: Nem létező paraméter");

@@ -1,5 +1,9 @@
-﻿using System;
+﻿using EKE.Data.Entities.Home;
 using EKE.Data.Infrastructure;
+using EKE.Service.Utils;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace EKE.Service.Services.Home
 {

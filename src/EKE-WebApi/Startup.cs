@@ -2,6 +2,8 @@
 using EKE.Data.Infrastructure;
 using EKE.Data.Repository;
 using EKE.Data.Repository.Base;
+using EKE.Service.Services;
+using EKE.Service.Services.Admin.Main;
 using EKE.Service.Services.Vt;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -36,12 +38,15 @@ namespace EKE_WebApi
             services.AddApplicationInsightsTelemetry(Configuration);
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IVtServices, VtServices>();
+            services.AddTransient<IMainService, MainService>();
+            services.AddTransient<IGeneralService, GeneralService>();
 
             services.AddTransient<IEntityBaseRepository<VtAccomodationType>, EntityBaseRepository<VtAccomodationType>>();
             services.AddTransient<IEntityBaseRepository<VtMembership>, EntityBaseRepository<VtMembership>>();
 
             //Add Services
             services.AddCors();
+            services.AddMemoryCache();
             services.AddMvc();
             services.AddSession();
         }
