@@ -159,7 +159,7 @@ namespace EKE.Service.Services.Vt
                 trip = trips.FirstOrDefault(x => x.Id == tripId);
                 tripString += "3. " + trip?.Name + "<br />";
                 tripPrice += trip?.Price ?? 0;
-                return $"{tripString} Végösszeg: {tripPrice}";
+                return $"{tripString} Túrák összege (belépőkkel): {tripPrice}";
             }
             catch (Exception)
             {
