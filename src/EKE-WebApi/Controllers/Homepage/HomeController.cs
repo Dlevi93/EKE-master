@@ -49,6 +49,13 @@ namespace EKE_WebApi.Controllers.Homepage
         }
 
         [HttpGet("[action]")]
+        public List<H_Article> HomeNews()
+        {
+            var result = _mainService.GetNewsElements();
+            return result.Data;
+        }
+
+        [HttpGet("[action]")]
         public List<H_Article> LatestElementList()
         {
             var result = _mainService.GetLatestElements();

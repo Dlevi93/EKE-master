@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace EKE.Service.Services.Admin.Main
 {
@@ -22,6 +23,7 @@ namespace EKE.Service.Services.Admin.Main
         Result<List<H_Article>> GetFutureEvents();
         Result<List<H_Article>> GetLatestElements();
         Result<List<H_Article>> GetLatestArticles();
+        Result<List<H_Article>> GetNewsElements();
     }
 
     public class MainService : IMainService
@@ -160,7 +162,7 @@ namespace EKE.Service.Services.Admin.Main
                     article.MediaElements = SolveMediaElements(article);
                 }
 
-                return new Result<List<H_Article>>(_unitOfWork.HElementRepository.GetAllIncludingPred(x => x.Category == NewsCategories.Hír, x => x.MediaElements).OrderByDescending(x => x.DateAdded).Take(10).ToList());
+                return new Result<List<H_Article>>(result);
 
 
             }
@@ -184,6 +186,31 @@ namespace EKE.Service.Services.Admin.Main
                 };
             }
             return article.MediaElements.ToList();
+        }
+
+        public Result<List<H_Article>> GetNewsElements()
+        {
+            try
+            {
+                var result = _unitOfWork.HElementRepository.GetAllIncludingPred(x => x.Category == NewsCategories.Hír, x => x.MediaElements).OrderByDescending(x => x.DateAdded).Skip(12).Take(3).ToList();
+
+                foreach (var article in result)
+                {
+                    article.MediaElements = SolveMediaElements(article);
+                    article.Description = StripHtml(article.Description);
+                }
+
+                return new Result<List<H_Article>>(result);
+            }
+            catch (Exception ex)
+            {
+                return new Result<List<H_Article>>(ResultStatus.ERROR, ex.Message);
+            }
+        }
+
+        public string StripHtml(string input)
+        {
+            return Regex.Replace(input, "<.*?>", String.Empty).Substring(0, 150);
         }
     }
 }

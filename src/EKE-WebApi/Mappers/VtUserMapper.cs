@@ -51,7 +51,7 @@ namespace EKE_WebApi.Mappers
                 Email = request.Email,
                 Membership = membership,
                 MembershipNo = request.TagNo,
-                Name = $"{ (object)request.LastName} { (object)request.FirstName}",
+                Name = $"{ (object)request.FirstName} { (object)request.LastName}",
                 Note = request.Notes,
                 PhoneNumber = request.Phoneno,
                 RegistrationDate = DateTime.Now,

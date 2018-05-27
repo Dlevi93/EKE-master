@@ -43,5 +43,6 @@
         public string Name { get; set; }
         public string City { get; set; }
         public string Member { get; set; }
+        public string Trips { get; set; }
     }
 }

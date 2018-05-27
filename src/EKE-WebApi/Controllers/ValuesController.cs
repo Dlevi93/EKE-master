@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using EKE.Data.Entities.Enums;
+using EKE.Data.Entities.Vandortabor;
 using EKE.Service.Services.Vt;
 using EKE_WebApi.Mappers;
 using EKE_WebApi.Models.Registration;
@@ -22,11 +24,14 @@ namespace EKE_WebApi.Controllers
         public IEnumerable<UserResponse> UserList()
         {
             var result = _vtServices.GetAllUsers();
+            var trips = _vtServices.GetAllTripsForTable();
+
             return result.Data.Select(x => new UserResponse
             {
                 Name = x.Name,
                 City = x.City,
                 Member = x.Membership?.Name.ToString() ?? "-",
+                Trips = _vtServices.GetTripNames(x.Spots.ToList(), trips.Data)
             });
         }
 

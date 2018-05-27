@@ -9,6 +9,7 @@
     <RuntimeIdentifiers>win10-x64;win81-x64;win8-x64;win7-x64</RuntimeIdentifiers>
     <RuntimeFrameworkVersion>2.0</RuntimeFrameworkVersion>
     <PackageTargetFallback>$(PackageTargetFallback);dotnet5.6;portable-net45+win8</PackageTargetFallback>
+    <UserSecretsId>2525318f-0960-416d-9cfd-0581c9bd20f2</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

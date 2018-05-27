@@ -4,6 +4,7 @@ using EKE.Service.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using EKE.Data.Entities.Enums;
 
 namespace EKE.Service.Services.Vt
 {
@@ -14,6 +15,7 @@ namespace EKE.Service.Services.Vt
         Result<List<VtMembership>> GetAllMemberships();
 
         Result<List<VtTrip>> GetAllTrips(int day);
+        Result<List<VtTrip>> GetAllTripsForTable();
         Result<VtTrip> GetTrip(int id);
 
         Result AddUser(VtUser user);
@@ -21,6 +23,8 @@ namespace EKE.Service.Services.Vt
         Result<List<VtUser>> GetAllUsers();
 
         Result<VtSpot> GetRemainingSpots(int tripId, int day);
+
+        string GetTripNames(List<VtUserSpots> spots, List<VtTrip> trips);
     }
 
     public class VtServices : IVtServices
@@ -92,6 +96,18 @@ namespace EKE.Service.Services.Vt
             }
         }
 
+        public Result<List<VtTrip>> GetAllTripsForTable()
+        {
+            try
+            {
+                return new Result<List<VtTrip>>(_unitOfWork.SpotRepository.GetAllIncluding(x => x.Trip).Select(x => x.Trip).ToList());
+            }
+            catch (Exception ex)
+            {
+                return new Result<List<VtTrip>>(ResultStatus.ERROR, ex.Message);
+            }
+        }
+
         public Result<VtTrip> GetTrip(int id)
         {
             try
@@ -125,6 +141,33 @@ namespace EKE.Service.Services.Vt
             }
         }
 
+        public string GetTripNames(List<VtUserSpots> spots, List<VtTrip> trips)
+        {
+            var tripString = "";
+            decimal tripPrice = 0;
+            try
+            {
+                var tripId = spots.FirstOrDefault(x => x.Spot.Day == VtDays.Tuesday).Spot.TripId;
+                var trip = trips.FirstOrDefault(x => x.Id == tripId);
+                tripString += "1. " + trip?.Name + "<br />";
+                tripPrice += trip?.Price ?? 0;
+                tripId = spots.FirstOrDefault(x => x.Spot.Day == VtDays.Wednesday).Spot.TripId;
+                trip = trips.FirstOrDefault(x => x.Id == tripId);
+                tripString += "2. " + trip?.Name + "<br />";
+                tripPrice += trip?.Price ?? 0;
+                tripId = spots.FirstOrDefault(x => x.Spot.Day == VtDays.Thursday).Spot.TripId;
+                trip = trips.FirstOrDefault(x => x.Id == tripId);
+                tripString += "3. " + trip?.Name + "<br />";
+                tripPrice += trip?.Price ?? 0;
+                return $"{tripString} Végösszeg: {tripPrice}";
+            }
+            catch (Exception)
+            {
+                return "-Hiba-";
+            }
+
+        }
+
         public Result<VtUser> GetUser(int id)
         {
             try
@@ -141,7 +184,7 @@ namespace EKE.Service.Services.Vt
         {
             try
             {
-                return new Result<List<VtUser>>(_unitOfWork.UserRepository.GetAllIncluding(x => x.Membership).ToList());
+                return new Result<List<VtUser>>(_unitOfWork.UserRepository.GetAllIncluding(x => x.Membership, x => x.Spots).ToList());
             }
             catch (Exception ex)
             {
