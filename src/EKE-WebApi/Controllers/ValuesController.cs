@@ -31,7 +31,7 @@ namespace EKE_WebApi.Controllers
                 Name = x.Name,
                 City = x.City,
                 Member = x.Membership?.Name.ToString() ?? "-",
-                Trips = _vtServices.GetTripNames(x.Spots.ToList(), trips.Data)
+                Trips = _vtServices.GetTripNames(x.Spots.ToList(), trips.Data, x.PaymentCategory, !string.IsNullOrEmpty(x.Car))
             });
         }
 
@@ -144,7 +144,10 @@ namespace EKE_WebApi.Controllers
         public IActionResult Add([FromBody] UserRequest model)
         {
             var result = _vtServices.AddUser(VtUserMapper.ToUser(model));
-            return Ok();
+            if (result.IsOk())
+                return Ok();
+
+            return NoContent();
         }
 
         [HttpGet("[action]/{id}")]

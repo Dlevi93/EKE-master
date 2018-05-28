@@ -19,6 +19,9 @@ namespace EKE_WebApi.Models.Registration
         public string TagNo { get; set; }
         public string Notes { get; set; }
 
+        public string DayOnlySelected { get; set; }
+        public string PaymentCategoryType { get; set; }
+
         public TripResponse Trip1 { get; set; }
         public TripResponse Trip2 { get; set; }
         public TripResponse Trip3 { get; set; }

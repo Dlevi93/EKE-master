@@ -1,6 +1,7 @@
 ﻿using EKE.Data.Entities.Base;
 using System;
 using System.Collections.Generic;
+using EKE.Data.Entities.Enums;
 
 namespace EKE.Data.Entities.Vandortabor
 {
@@ -18,6 +19,10 @@ namespace EKE.Data.Entities.Vandortabor
         public string Cnp { get; set; }
         public string Car { get; set; }
         public string Note { get; set; }
+
+        public VtPaymentCategory PaymentCategory { get; set; }
+        public string SelectedDay { get; set; }
+
 
         public virtual VtMembership Membership { get; set; }
         public virtual VtAccomodationType AccomodationType { get; set; }

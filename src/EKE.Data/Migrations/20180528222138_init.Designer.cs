@@ -12,7 +12,7 @@ using System;
 namespace EKE.Data.Migrations
 {
     [DbContext(typeof(BaseDbContext))]
-    [Migration("20180501074714_init")]
+    [Migration("20180528222138_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -514,9 +514,13 @@ namespace EKE.Data.Migrations
 
                     b.Property<string>("Note");
 
+                    b.Property<int>("PaymentCategory");
+
                     b.Property<string>("PhoneNumber");
 
                     b.Property<DateTime>("RegistrationDate");
+
+                    b.Property<string>("SelectedDay");
 
                     b.Property<int?>("VtTripId");
 

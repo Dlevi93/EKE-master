@@ -513,9 +513,13 @@ namespace EKE.Data.Migrations
 
                     b.Property<string>("Note");
 
+                    b.Property<int>("PaymentCategory");
+
                     b.Property<string>("PhoneNumber");
 
                     b.Property<DateTime>("RegistrationDate");
+
+                    b.Property<string>("SelectedDay");
 
                     b.Property<int?>("VtTripId");
 

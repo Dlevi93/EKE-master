@@ -106,4 +106,17 @@
         Trailer = 2,
         Other = 3
     }
+
+    public enum VtPaymentCategory
+    {
+        Alap = 0,
+        Tag = 1,
+        Kisgyerek = 2,
+        GyerekNemTag = 3,
+        GyerekTag = 4,
+        DiakNemTag = 5,
+        DiakTag = 6,
+        GyerekCsalad = 7,
+        Napijegy = 8,
+    }
 }

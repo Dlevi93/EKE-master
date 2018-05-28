@@ -4,6 +4,7 @@ using EKE.Service.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using EKE.Data.Entities.Consts;
 using EKE.Data.Entities.Enums;
 
 namespace EKE.Service.Services.Vt
@@ -24,7 +25,7 @@ namespace EKE.Service.Services.Vt
 
         Result<VtSpot> GetRemainingSpots(int tripId, int day);
 
-        string GetTripNames(List<VtUserSpots> spots, List<VtTrip> trips);
+        string GetTripNames(List<VtUserSpots> spots, List<VtTrip> trips, VtPaymentCategory paymentCategory, bool withCar);
     }
 
     public class VtServices : IVtServices
@@ -141,10 +142,11 @@ namespace EKE.Service.Services.Vt
             }
         }
 
-        public string GetTripNames(List<VtUserSpots> spots, List<VtTrip> trips)
+        public string GetTripNames(List<VtUserSpots> spots, List<VtTrip> trips, VtPaymentCategory paymentCategory, bool withCar)
         {
             var tripString = "";
             decimal tripPrice = 0;
+            decimal paymentValue = VtConsts.GetPaymentValue(paymentCategory);
             try
             {
                 var tripId = spots.FirstOrDefault(x => x.Spot.Day == VtDays.Tuesday).Spot.TripId;
@@ -159,7 +161,11 @@ namespace EKE.Service.Services.Vt
                 trip = trips.FirstOrDefault(x => x.Id == tripId);
                 tripString += "3. " + trip?.Name + "<br />";
                 tripPrice += trip?.Price ?? 0;
-                return $"{tripString} Túrák összege (belépőkkel): {tripPrice}";
+                tripPrice += paymentValue;
+
+                if (withCar) tripPrice += 5;
+
+                return $"{tripString} Végösszeg: {tripPrice}";
             }
             catch (Exception)
             {

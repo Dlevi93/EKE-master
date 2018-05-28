@@ -586,8 +586,10 @@ namespace EKE.Data.Migrations
                     MembershipNo = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
                     Note = table.Column<string>(nullable: true),
+                    PaymentCategory = table.Column<int>(nullable: false),
                     PhoneNumber = table.Column<string>(nullable: true),
                     RegistrationDate = table.Column<DateTime>(nullable: false),
+                    SelectedDay = table.Column<string>(nullable: true),
                     VtTripId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
