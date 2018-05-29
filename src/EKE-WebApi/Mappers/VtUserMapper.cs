@@ -56,7 +56,7 @@ namespace EKE_WebApi.Mappers
                 PhoneNumber = request.Phoneno,
                 RegistrationDate = DateTime.Now,
                 Spots = trips,
-                PaymentCategory = (VtPaymentCategory)Convert.ToInt32(request.PaymentCategoryType),
+                PaymentCategory = (VtPaymentCategory)Convert.ToInt32(request.PaymentCategory),
                 SelectedDay = request.DayOnlySelected
             };
         }

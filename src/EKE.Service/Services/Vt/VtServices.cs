@@ -89,7 +89,7 @@ namespace EKE.Service.Services.Vt
         {
             try
             {
-                return new Result<List<VtTrip>>(_unitOfWork.SpotRepository.GetAllIncludingPred(x => (int)x.Day == day, x => x.Trip).Select(x => x.Trip).ToList());
+                return new Result<List<VtTrip>>(_unitOfWork.SpotRepository.GetAllIncludingPred(x => (int)x.Day == day, x => x.Trip).Select(x => x.Trip).OrderBy(x=>x.Name).ToList());
             }
             catch (Exception ex)
             {
@@ -165,7 +165,7 @@ namespace EKE.Service.Services.Vt
 
                 if (withCar) tripPrice += 5;
 
-                return $"{tripString} Végösszeg: {tripPrice}";
+                return $"{tripString} Végösszeg: {tripPrice} lej";
             }
             catch (Exception)
             {

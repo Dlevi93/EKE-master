@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using EKE.Data.Entities.Consts;
 using EKE.Data.Entities.Enums;
 using EKE.Data.Entities.Vandortabor;
 using EKE.Service.Services.Vt;
