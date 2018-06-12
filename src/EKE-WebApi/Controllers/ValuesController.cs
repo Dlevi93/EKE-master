@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using EKE.Data.Entities.Consts;
 using EKE.Data.Entities.Enums;
 using EKE.Data.Entities.Vandortabor;
@@ -142,13 +144,28 @@ namespace EKE_WebApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add([FromBody] UserRequest model)
+        public HttpResponseMessage Add([FromBody] UserRequest model)
         {
-            var result = _vtServices.AddUser(VtUserMapper.ToUser(model));
-            if (result.IsOk())
-                return Ok();
+            var vtUser = VtUserMapper.ToUser(model);
 
-            return NoContent();
+            foreach (var item in vtUser.Spots)
+            {
+                var remainingSpots = _vtServices.GetRemainingSpots(item.Spot.Trip.Id, (int)item.Spot.Day);
+                if (remainingSpots.IsOk())
+                {
+                    var remaining = remainingSpots.Data?.Spots - remainingSpots.Data?.Users?.Count() ?? 0;
+                    if (remaining < 1)
+                    {
+                        return new HttpResponseMessage(HttpStatusCode.NotAcceptable);
+                    }
+                }
+            }
+
+            var result = _vtServices.AddUser(vtUser);
+            if (result.IsOk())
+                return new HttpResponseMessage(HttpStatusCode.OK);
+
+            return new HttpResponseMessage(HttpStatusCode.NotModified);
         }
 
         [HttpGet("[action]/{id}")]
