@@ -62,7 +62,7 @@
                 headerColor: '#C0B480',
                 borderBottom: true,
                 padding: 25,
-                
+
             });
 
             $('#initModal').iziModal('open');
@@ -94,7 +94,7 @@
 
             $("#primary-menu div").click(function () {
                 Museum.getElementsByCategory($(this).text());
-            })
+            });
         },
 
         closeElemDesc: function (id) {
@@ -106,10 +106,15 @@
         },
 
         scrollToAjax: function () {
-            var hT = s.scrollPosition.offset().top,
-                hH = s.scrollPosition.outerHeight(),
-                wH = $(window).height();
-            if ($(window).scrollTop() > hT + hH - wH) {
+            //var hT = s.scrollPosition.offset().top,
+            //    hH = document.body.offsetHeight,
+            //    wH = $(window).height();
+            //if ($(window).scrollTop() > hT + hH - wH) {
+            //    $(window).off("scroll", Museum.scrollToAjax);
+            //    Museum.getElementsByPage();
+            //}
+
+            if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight) {
                 $(window).off("scroll", Museum.scrollToAjax);
                 Museum.getElementsByPage();
             }

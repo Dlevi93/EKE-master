@@ -24,5 +24,6 @@
         columns.Add(model => Html.ActionLink("Törlés", "DeleteElement", "Museum", new { id = model.Id }, new { @class = "btn btn-default" })).Titled("Opciók").Encoded(false);
     })
     .Pageable()
+    .Id("museum-grid")
     .Empty("Üres adattár a megadott paraméterekkel!")
 )

@@ -35,7 +35,7 @@
     </div>
 
     <div class="elem-grid" style="min-height:250px;">
-        @Html.AjaxGrid(Url.Action("ElementListGrid", "Museum"))
+        @Html.AjaxGrid(Url.Action("ElementListGrid", "Museum"), new { id = "museum-grid" })
     </div>
 </section>
 <!-- /.content -->

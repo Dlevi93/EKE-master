@@ -49,7 +49,7 @@ namespace EKE_Admin.Web.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login(string returnUrl = null)
         {
-            // await createRolesandUsers();
+            await createRolesandUsers();
 
             ViewData["ReturnUrl"] = returnUrl;
             return View();
