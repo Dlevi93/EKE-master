@@ -24,6 +24,7 @@ namespace EKE.Service.Services.Admin.Main
         Result<List<H_Article>> GetLatestElements();
         Result<List<H_Article>> GetLatestArticles();
         Result<List<H_Article>> GetNewsElements();
+        Result<H_Article> GetArticleBySlug(string slug);
     }
 
     public class MainService : IMainService
@@ -205,6 +206,24 @@ namespace EKE.Service.Services.Admin.Main
             catch (Exception ex)
             {
                 return new Result<List<H_Article>>(ResultStatus.ERROR, ex.Message);
+            }
+        }
+
+        public Result<H_Article> GetArticleBySlug(string slug)
+        {
+            try
+            {
+                var result = _unitOfWork.HElementRepository.GetAllIncludingPred(x => x.Category == NewsCategories.Hír && x.Slug == slug, x => x.MediaElements).FirstOrDefault();
+
+                if (result != null)
+                {
+                    result.MediaElements = SolveMediaElements(result);
+                }
+                return new Result<H_Article>(result);
+            }
+            catch (Exception ex)
+            {
+                return new Result<H_Article>(ResultStatus.ERROR, ex.Message);
             }
         }
 
