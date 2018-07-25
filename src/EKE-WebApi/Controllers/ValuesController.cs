@@ -48,8 +48,19 @@ namespace EKE_WebApi.Controllers
             return result.Data.Select(x => new UserResponseToVt
             {
                 Name = x.Name,
-                Birthdate = x.Birthdate.ToString(CultureInfo.InvariantCulture),
+                Birthdate = x.Birthdate.ToString("yyyy/dd/MM"),
+                RegistrationDate = x.RegistrationDate.ToString("yyyy/dd/MM HH:mm:ss"),
                 City = x.City,
+                Country = x.Country,
+                PhoneNumber = x.PhoneNumber,
+                Email = x.Email,
+                Cnp = x.Cnp,
+                Car = x.Car,
+                Note = x.Note,
+                PaymentCategory = x.PaymentCategory.ToString(),
+                SelectedDay = x.SelectedDay,
+                AccomodationType = x.AccomodationType.AccomodationType.ToString(),
+                AccomodationTypeName = x.AccomodationType.Name,
                 Member = x.Membership?.Name.ToString() ?? "-",
                 Trips = _vtServices.GetTripNames(x.Spots.ToList(), trips.Data, x.PaymentCategory, !string.IsNullOrEmpty(x.Car))
             });

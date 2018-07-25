@@ -89,7 +89,7 @@ namespace EKE.Service.Services.Vt
         {
             try
             {
-                return new Result<List<VtTrip>>(_unitOfWork.SpotRepository.GetAllIncludingPred(x => (int)x.Day == day, x => x.Trip).Select(x => x.Trip).OrderBy(x=>x.Name).ToList());
+                return new Result<List<VtTrip>>(_unitOfWork.SpotRepository.GetAllIncludingPred(x => (int)x.Day == day, x => x.Trip).Select(x => x.Trip).OrderBy(x => x.Name).ToList());
             }
             catch (Exception ex)
             {
@@ -190,7 +190,7 @@ namespace EKE.Service.Services.Vt
         {
             try
             {
-                return new Result<List<VtUser>>(_unitOfWork.UserRepository.GetAllIncluding(x => x.Membership, x => x.Spots).ToList());
+                return new Result<List<VtUser>>(_unitOfWork.UserRepository.GetAllIncluding(x => x.Membership, x => x.Spots, x => x.AccomodationType).ToList());
             }
             catch (Exception ex)
             {

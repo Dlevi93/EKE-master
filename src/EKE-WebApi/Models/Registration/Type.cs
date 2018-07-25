@@ -65,9 +65,9 @@ namespace EKE_WebApi.Models.Registration
         public string PaymentCategory { get; set; }
         public string SelectedDay { get; set; }
 
-
         public string Membership { get; set; }
         public string AccomodationType { get; set; }
+        public string AccomodationTypeName { get; set; }
 
         public string Trips { get; set; }
     }
