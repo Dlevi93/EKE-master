@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -32,6 +33,22 @@ namespace EKE_WebApi.Controllers
             return result.Data.Select(x => new UserResponse
             {
                 Name = x.Name,
+                City = x.City,
+                Member = x.Membership?.Name.ToString() ?? "-",
+                Trips = _vtServices.GetTripNames(x.Spots.ToList(), trips.Data, x.PaymentCategory, !string.IsNullOrEmpty(x.Car))
+            });
+        }
+
+        [HttpGet("[action]")]
+        public IEnumerable<UserResponseToVt> UserListToTb()
+        {
+            var result = _vtServices.GetAllUsers();
+            var trips = _vtServices.GetAllTripsForTable();
+
+            return result.Data.Select(x => new UserResponseToVt
+            {
+                Name = x.Name,
+                Birthdate = x.Birthdate.ToString(CultureInfo.InvariantCulture),
                 City = x.City,
                 Member = x.Membership?.Name.ToString() ?? "-",
                 Trips = _vtServices.GetTripNames(x.Spots.ToList(), trips.Data, x.PaymentCategory, !string.IsNullOrEmpty(x.Car))
